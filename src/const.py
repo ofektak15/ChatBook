@@ -1,0 +1,4 @@
+class Consts(object):
+    MAX_SERVER_LISTEN = 100
+    MAX_MSG_LENGTH = 1024
+    TIMEOUT_SELECT_DATA = 5
