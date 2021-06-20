@@ -7,7 +7,7 @@ from connection import Connection
 from connection_state import ConnectionState
 from connections import Connections
 from const import Consts
-from protocol import ProtoLogin
+from protocol import ProtoLogin, ProtoBroadcast
 from user import User
 from users import Users
 
@@ -47,13 +47,46 @@ class Server(object):
         print('Exit unimplemented')
         exit(1)
 
-    def _broadcast(self, msg, origin):
-        connections = list(self.connections.get_connections())
-        for connection in connections:
-            if connection == origin:
-                continue
-            # TODO: Might throw exception if the socket was closed already *race*
-            connection.send(msg)
+    def _connection_login(self, msg, origin):
+        # TODO: validate this is a valid json
+        login = ProtoLogin.from_json(msg)
+        if not hasattr(login, 'username'):
+            # TODO: or maybe just send a regular json response
+            origin.send(b'0')
+            return
+        if not hasattr(login, 'password'):
+            # TODO: or maybe just send a regular json response
+            origin.send(b'0')
+            return
+
+        user = self.authenticate.authenticate(login.username, login.password)
+        if isinstance(user, User):
+            origin.state = ConnectionState.BROADCAST
+            origin.user = user
+            # TODO: refactor later (maybe use status_codes.py)
+            # TODO: or maybe just send a regular json response
+            origin.send(b'1')
+        else:
+            origin.send(b'0')
+
+    def _connection_broadcast(self, msg, origin):
+        broadcast = ProtoBroadcast.from_json(msg)
+        if not hasattr(broadcast, 'username'):
+            # TODO: or maybe just send a regular json response
+            origin.send(b'0')
+            return
+        if not hasattr(broadcast, 'content'):
+            # TODO: or maybe just send a regular json response
+            origin.send(b'0')
+            return
+
+        if broadcast.username == origin.user.username:
+            connections = list(self.connections.get_connections())
+            for connection in connections:
+                if connection == origin:
+                    continue
+                # TODO: Might throw exception if the socket was closed already *race*
+                connection.send(msg)
 
     def _handle_accept(self):
         while True:
@@ -73,7 +106,8 @@ class Server(object):
                 connection = self.connections.get(sock)
                 self._handle_connection(connection)
 
-    def _handle_manage(self):
+    @staticmethod
+    def _handle_manage():
         while True:
             choice = input('enter "exit" to terminate')
             if choice == 'exit':
@@ -87,28 +121,9 @@ class Server(object):
         if connection.state == ConnectionState.UNAUTHENTICATED:
             data = connection.recv()
             msg = data.decode()
-
-            # TODO: validate this is a valid json
-            login = ProtoLogin.from_json(msg)
-            if not hasattr(login, 'username'):
-                # TODO: or maybe just send a regular json response
-                connection.send(b'0')
-                return
-            if not hasattr(login, 'password'):
-                # TODO: or maybe just send a regular json response
-                connection.send(b'0')
-                return
-
-            user = self.authenticate.authenticate(login.username, login.password)
-            if isinstance(user, User):
-                connection.state = ConnectionState.BROADCAST
-                connection.user = user
-                # TODO: refactor later (maybe use status_codes.py)
-                # TODO: or maybe just send a regular json response
-                connection.send(b'1')
-            else:
-                connection.send(b'0')
-
+            self._connection_login(msg=msg, origin=connection)
         elif connection.state == ConnectionState.BROADCAST:
-            data = connection.recv(Consts.MAX_MSG_LENGTH)
-            self._broadcast(msg=data, origin=connection)
+            data = connection.recv()
+            msg = data.decode()
+            # TODO: validate this is a valid json
+            self._connection_broadcast(msg=msg, origin=connection)

@@ -2,7 +2,7 @@ import socket
 from threading import Thread
 
 from const import Consts
-from protocol import ProtoLogin
+from protocol import ProtoLogin, ProtoBroadcast
 
 
 class Client(object):
@@ -11,6 +11,9 @@ class Client(object):
         self.port = port
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.client.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
+        self.username = ''
+        self.password = ''
 
     def start(self):
         self.connect()
@@ -30,7 +33,9 @@ class Client(object):
 
     def _handle_send(self):
         while True:
-            data = input('>>> ')
+            content = input('>>> ')
+            proto_broadcast = ProtoBroadcast(origin=self.username, content=content)
+            data = proto_broadcast.to_json()
             msg = data.encode()
             self.client.send(msg)
 
@@ -42,9 +47,9 @@ class Client(object):
 
     def authenticate(self):
         while True:
-            username = input('Enter username: ')
-            password = input('Enter password: ')
-            proto_login = ProtoLogin(username, password)
+            self.username = input('Enter username: ')
+            self.password = input('Enter password: ')
+            proto_login = ProtoLogin(self.username, self.password)
             data = proto_login.to_json()
             msg = data.encode()
             self.client.send(msg)
