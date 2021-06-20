@@ -2,9 +2,13 @@ import select
 import socket
 from threading import Thread
 
+from authenticate import Authenticate
 from connection import Connection
+from connection_state import ConnectionState
 from connections import Connections
 from const import Consts
+from user import User
+from users import Users
 
 
 class Server(object):
@@ -21,6 +25,8 @@ class Server(object):
         self.thread_data = None
         self.thread_manage = None
 
+        self.users = Users(default_initialization=True)
+        self.authenticate = Authenticate(self.users)
         self.connections = Connections()
         # [1,2,3,4,5,6,7,8,9,10] (O(n))
         # {'1': 1, ... , '9': 9 } (O(1))
@@ -75,5 +81,17 @@ class Server(object):
         if connection.is_closed():
             connection.close()
             self.connections.remove(connection)
-        data = connection.recv(Consts.MAX_MSG_LENGTH)
-        self._broadcast(msg=data, origin=connection)
+
+        if connection.state == ConnectionState.UNAUTHENTICATED:
+            data = connection.recv()
+            msg = data.decode()
+            print(msg)
+
+            user = self.authenticate.authenticate(msg)
+            if isinstance(user, User):
+                connection.state = ConnectionState.BROADCAST
+                connection.user = user
+
+        elif connection.state == ConnectionState.BROADCAST:
+            data = connection.recv(Consts.MAX_MSG_LENGTH)
+            self._broadcast(msg=data, origin=connection)
