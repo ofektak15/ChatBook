@@ -7,6 +7,7 @@ from connection import Connection
 from connection_state import ConnectionState
 from connections import Connections
 from const import Consts
+from protocol import ProtoLogin
 from user import User
 from users import Users
 
@@ -65,6 +66,7 @@ class Server(object):
         while True:
             # TODO: Might race if not (list)
             socks = list(self.connections.get_socks())
+            # TODO: might race login & broadcast messages
             ready_to_read, _, _ = select.select(socks, [], [], Consts.TIMEOUT_SELECT_DATA)
 
             for sock in ready_to_read:
@@ -85,12 +87,27 @@ class Server(object):
         if connection.state == ConnectionState.UNAUTHENTICATED:
             data = connection.recv()
             msg = data.decode()
-            print(msg)
 
-            user = self.authenticate.authenticate(msg)
+            # TODO: validate this is a valid json
+            login = ProtoLogin.from_json(msg)
+            if not hasattr(login, 'username'):
+                # TODO: or maybe just send a regular json response
+                connection.send(b'0')
+                return
+            if not hasattr(login, 'password'):
+                # TODO: or maybe just send a regular json response
+                connection.send(b'0')
+                return
+
+            user = self.authenticate.authenticate(login.username, login.password)
             if isinstance(user, User):
                 connection.state = ConnectionState.BROADCAST
                 connection.user = user
+                # TODO: refactor later (maybe use status_codes.py)
+                # TODO: or maybe just send a regular json response
+                connection.send(b'1')
+            else:
+                connection.send(b'0')
 
         elif connection.state == ConnectionState.BROADCAST:
             data = connection.recv(Consts.MAX_MSG_LENGTH)

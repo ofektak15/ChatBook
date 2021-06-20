@@ -2,6 +2,7 @@ import socket
 from threading import Thread
 
 from const import Consts
+from protocol import ProtoLogin
 
 
 class Client(object):
@@ -13,6 +14,8 @@ class Client(object):
 
     def start(self):
         self.connect()
+
+        self.authenticate()
 
         thread_recv = Thread(target=self._handle_recv)
         thread_recv.start()
@@ -36,3 +39,18 @@ class Client(object):
             msg = self.client.recv(Consts.MAX_MSG_LENGTH)
             data = msg.decode()
             print(data)
+
+    def authenticate(self):
+        while True:
+            username = input('Enter username: ')
+            password = input('Enter password: ')
+            proto_login = ProtoLogin(username, password)
+            data = proto_login.to_json()
+            msg = data.encode()
+            self.client.send(msg)
+            # TODO: refactor
+            code = self.client.recv(Consts.AUTHENTICATED_STATUS_MSG_LENGTH)
+            if code == b'1':
+                break
+            print('Please try again...')
+        print('Authenticated successfully!!!')
