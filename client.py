@@ -46,7 +46,7 @@ def send_message(sock, username):
         recipient = input('recipient: ')
         message_content = input('content: ')
 
-        request.username = username
+        request.sender_username = username
         request.recipient = recipient
         request.message_content = message_content
 
@@ -65,7 +65,7 @@ def handle_recv(sock):
         if data:
             message = SendMessageRequest()
             message.unpack(data)
-            print('Got message "', message.message_content, '" From "', message.username, '"')
+            print('Got message "', message.message_content, '" From "', message.sender_username, '"')
 
 
 def main():

@@ -1,6 +1,58 @@
 {
   "users": {
-    "ofek": "1234",
-    "tomer": "1234"
+    "ofek": {
+      "password": "1234",
+      "is_connected": false
+    },
+    "tomer": {
+      "password": "1234",
+      "is_connected": false
+    }
+  },
+  "chats": {
+    "thekings": {
+      "chat_type": "group",
+      "chat_participants": [
+        "ofek",
+        "tomer",
+        "adam"
+      ],
+      "chat_messages": [
+        {
+          "from": "ofek",
+          "message_content": "hi",
+          "time": "21:22",
+          "received": ["ofek", "tomer", "adam"]
+
+        },
+        {
+          "from": "tomer",
+          "message_content": "heyy",
+          "time": "21:23",
+          "received": ["ofek", "tomer"]
+        }
+      ]
+    },
+    "ofek,tomer": {
+      "chat_type": "private",
+      "chat_participants": [
+        "ofek",
+        "tomer"
+      ],
+      "chat_messages": [
+        {
+          "from": "ofek",
+          "message_content": "hi",
+          "time": "21:22",
+          "received": ["ofek", "tomer"]
+        },
+        {
+          "from": "tomer",
+          "message_content": "heyy",
+          "time": "21:23",
+          "received": ["tomer"]
+        }
+      ]
+    }
   }
 }
