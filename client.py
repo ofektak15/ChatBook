@@ -14,6 +14,7 @@ class Client(object):
         request.username = username
         request.password = password
 
+        print('register')
         print(request.username)
         print(request.password)
 
@@ -28,6 +29,10 @@ class Client(object):
 
         request.username = username
         request.password = password
+
+        print('login')
+        print(request.username)
+        print(request.password)
 
         self.sock.send(request.pack().encode())
         status = self.sock.recv(1024).decode()

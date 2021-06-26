@@ -44,10 +44,7 @@
         // should be mode == true
     if (true){
         alert("Attempting to register...");
-//        status_registration = eel.register()();
         status_registration = eel.register(userName, password);
-        // status_registration = eel.register(userName, password);
-        alert("???");
         return status_registration;
     }
     else{

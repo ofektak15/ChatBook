@@ -54,10 +54,10 @@ class SendMessageRequest(Message):
         json_db = json.loads(str_db)
 
         if self.sender_socket not in authenticated_sockets.keys():
-            self.sender_socket.send('Please login first!')
+            self.sender_socket.send(b'Please login first!')
 
         if self.sender_username != authenticated_sockets[self.sender_socket]:
-            self.sender_socket.send('Wrong username!')
+            self.sender_socket.send(b'Wrong username!')
 
         if self.type_of_message == 'private':
             recipients = self.recipients.split(',')  # ['ofek', 'tomer']
@@ -81,6 +81,7 @@ class SendMessageRequest(Message):
 
             str_modified_db = json.dumps(json_db)
             open('db.json', 'w').write(str_modified_db)
+            self.sender_socket.send(b'SUCCESS')
             return
 
         elif self.type_of_message == 'group':
@@ -103,6 +104,7 @@ class SendMessageRequest(Message):
 
             str_modified_db = json.dumps(json_db)
             open('db.json', 'w').write(str_modified_db)
+            self.sender_socket.send(b'SUCCESS')
             return
 
         self.sender_socket.send(b'FAIL')
@@ -132,6 +134,9 @@ class LoginRequest(Message):
         if self.username in json_db['users'].keys():
             if self.password == json_db['users'][self.username]['password']:
                 authenticated_sockets[self.sender_socket] = self.username
+                json_db['users'][self.username]['is_connected'] = True
+                str_modified_db = json.dumps(json_db)
+                open('db.json', 'w').write(str_modified_db)
                 self.sender_socket.send(b'SUCCESS')
                 return
         # DB
@@ -167,7 +172,10 @@ class LogoutRequest(Message):
 
         if self.username in json_db['users'].keys():
             json_db['users'][self.username]['is_connected'] = False
+            str_modified_db = json.dumps(json_db)
+            open('db.json', 'w').write(str_modified_db)
             self.sender_socket.send(b'SUCCESS')
+            return
 
         self.sender_socket.send(b'FAIL')
 
