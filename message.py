@@ -1,5 +1,6 @@
 import json
 import time
+import hashlib
 
 
 class Message(object):
@@ -132,7 +133,8 @@ class LoginRequest(Message):
         json_db = json.loads(str_db)
 
         if self.username in json_db['users'].keys():
-            if self.password == json_db['users'][self.username]['password']:
+            hashed_password = hashlib.md5(self.password).hexdigest()
+            if hashed_password == json_db['users'][self.username]['password']:
                 authenticated_sockets[self.sender_socket] = self.username
                 json_db['users'][self.username]['is_connected'] = True
                 str_modified_db = json.dumps(json_db)
@@ -206,7 +208,8 @@ class RegisterRequest(Message):
             return
 
         json_db['users'][self.username] = {}
-        json_db['users'][self.username]['password'] = self.password
+        hashed_password = hashlib.md5(self.password).hexdigest()
+        json_db['users'][self.username]['password'] = hashed_password
         json_db['users'][self.username]['is_connected'] = False
         str_modified_db = json.dumps(json_db)
         open('db.json', 'w').write(str_modified_db)
