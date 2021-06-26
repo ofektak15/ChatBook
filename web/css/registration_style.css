@@ -1,0 +1,73 @@
+﻿body {
+    background-image: url('../img/registration_background.jpg');
+    background-size: cover;
+    font-family: Arial;
+}
+
+input[type=text], input[type=password], input[type=email], input[type=number], input[type=date], select {
+    width: 35%;
+    box-sizing: border-box;
+    padding: 12px 5px;
+    background: white;
+    outline: none;
+    border: none;
+    border-bottom: 1px dotted #fff;
+    color: black;
+    border-radius: 5px;
+    margin: 5px;
+    font-weight: bold;
+}
+
+input[type=submit] {
+    width: 25%;
+    box-sizing: border-box;
+    padding: 10px 0;
+    margin-top: 20px;
+    outline: none;
+    border: none;
+    background: #60adde;
+    opacity: 1;
+    border-radius: 20px;
+    font-size: 20px;
+    color: #fff;
+}
+
+input[type=reset] {
+    width: 15%;
+    box-sizing: border-box;
+    padding: 10px 0;
+    margin-top: 20px;
+    outline: none;
+    border: none;
+    background: red;
+    opacity: 1;
+    font-size: 20px;
+    color: #fff;
+}
+
+button {
+    width: 6%;
+    box-sizing: border-box;
+    padding: 10px 0;
+    margin-top: 20px;
+    outline: none;
+    border: none;
+    background: white;
+    opacity: 1;
+    font-size: 20px;
+    color: black;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 120%;
+}
+
+#name, #LastName, #phone, #userName, #password, #confirmPassword, #adress, #email, #robot {
+    color: red;
+}
+
+#MediumPassword {
+    color: darkorange;
+}
+
+#StrongPassword {
+    color: green;
+}

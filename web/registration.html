@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <title>Registration</title>
+    <link href="css/registration_style.css" rel="stylesheet" />
+    <script src="js/go_back_button.js"></script>
+    <script src="js/validate_registration.js"></script>
+</head>
+<body>
+    <button type="button" onclick="goBack()">Go Back</button>
+
+    <h1 style="color: white; font-size: 70px;">Sign up here</h1>
+
+    <form name="registration_form" onsubmit="validate_registration_form()">
+
+
+        <input type="text" onkeyup="checkName(this.value);" id="firstName" name="firstName" placeholder="First Name... (Required)" />
+        <label style="color: white; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 120%;">First name</label>
+        <div id="error_first_name"></div>
+
+        <input type="text" onkeyup="checkLastName(this.value);" id="lastName" name="lastName" placeholder="Last Name... (Required)" />
+        <label style="color: white; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 120%;">Last name</label>
+        <div id="error_last_name"></div>
+
+        <input type="text" onkeyup="checkPhone(this.value);" id="Phone" name="Phone" placeholder="phone number... (Required)" />
+        <label style="color: white; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 120%;">Phone number</label>
+        <div id="error_phone_number"></div>
+
+        <input type="text" onkeyup="checkEmail(this.value);" id="Email" name="Email" placeholder="Email... (Required)" />
+        <label style="color: white; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 120%;">Email</label>
+        <div id="error_mail"></div>
+
+        <input type="text" onkeyup="checkUserName(this.value);" id="UserName" name="UserName" placeholder="User Name... (Required)" />
+        <label style="color: white; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 120%;">User name</label>
+        <div id="error_username"></div>
+
+        <input type="password" onkeyup="checkPassword(this.value);" id="Password" name="Password" placeholder="Password... (Required)" />
+        <label style="color: white; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 120%;">Password</label>
+        <div id="error_password"></div>
+        <div id="MediumPassword"></div>
+        <div id="StrongPassword"></div>
+
+        <input type="password" onkeyup="checkConfirmPassword(this.value);" id="confirmPassword1" name="confirmPassword1" placeholder="Confirm Password... (Required)" />
+        <label style="color: white; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 120%;">Confirm password</label>
+        <div id="error_confirm_password"></div>
+
+
+        <input type="text" name="address" placeholder="Address..." />
+        <label style="color: white; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 120%;">Address</label>
+
+        <br />
+
+        <input type="number" onkeyup="checkAge(this.value)" id="age1" name="age1" placeholder="Age... (Required)" />
+        <label style="color: white; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 120%;">Age</label>
+        <div style="color: red" id="error_age"></div>
+
+
+        <input type="date" onkeyup="checkDateBirth(this.value)" value="date" id="date" name="date" onplay="Date of birth..." />
+        <label style="color: white; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 120%;">Date of Birth (Required)</label>
+        <div style="color: red" id="error_date_of_birth"></div>
+
+        <div>
+            <select id="country_select" name="country_select">
+                <option value="select">Choose a country</option>
+                <option value="israel">Israel</option>
+                <option value="usa">USA</option>
+                <option value="spain">Spain</option>
+                <option value="england">England</option>
+                <option value="italy">Italy</option>
+                <option value="france">France</option>
+            </select>
+            <label style="color: white; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 120%;">Country (Required)</label>
+        </div>
+        <div style="color: red;" id="error_country"></div>
+
+        <br />
+
+        <label style="color: white; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 120%;">Select gender (Required)</label>
+        <div id="radioStyle" style="color: white;">
+            <br />
+            <input type="radio" id="male" name="gender2" value="male" onclick="checkRadio()" />
+            <label for="male">male</label>
+            <br />
+            <input type="radio" id="female" name="gender2" value="female" onclick="checkRadio()" />
+            <label for="female">female</label>
+            <br />
+            <input type="radio" id="other" name="gender2" value="other" onclick="checkRadio()" />
+            <label for="other">other</label>
+
+            <br />
+        </div>
+        <br />
+        <div style="color: red;" id="error_gender"></div>
+
+        <br />
+        <label style="color: white; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 120%;">I'm not robot (Required)</label>
+        <div class="g-recaptcha" data-sitekey="6LdkZdYUAAAAAGLzkkuiiM4J7dBCW9uPxJeQMs8K" data-callback="checkRobot"></div>
+        <br />
+        <div id="error_robot"></div>
+        <script src='https://www.recaptcha.net/recaptcha/api.js'></script>
+
+        <input type="submit" value="submit" />
+        <input type="reset" value="Reset" />
+
+    </form>
+</body>
+</html>
+

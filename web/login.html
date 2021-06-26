@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <link rel="stylesheet" type="text/css" href="css/login_style.css" />
+    <script src="js/validate_login.js"></script>
+
+    <title>Login</title>
+    </head>
+
+    <body>
+    <div class="imgcontainer">
+        <h2 style="font-size: 340%; color: white;">Login Form</h2>
+    </div>
+
+    <div class="container">
+        <b>Username</b>
+        <input type="text" placeholder="Enter Username" id="username" name="userName" />
+
+        <br />
+
+        <b>Password</b>
+        <input type="password" placeholder="Enter Password" id="password" name="password" />
+
+        <img src="img/login_background.jpg" alt="Avatar" class="avatar" />
+
+        <button type="submit" onclick="return validate_login();">Login</button>
+
+        <div id="message" style="color: red; font-size: 120%;"></div>
+
+
+    </div>
+    <div class="container" style="background-color: white">
+
+        <span class="psw">Forgot <a href="checkPhoneNumber.aspx">password?</a></span>
+        <span>Make an <a href="Registration.aspx">account</a>.</span>
+    </div>
+    </body>
+
+</html>
