@@ -2,9 +2,10 @@ import json
 import select
 import socket
 
-from message import MESSAGES
+from message import MESSAGES, LogoutRequest
 
-PORT = 8088
+PORT = 8090
+HOST = 'localhost'
 
 
 def main():
@@ -30,12 +31,28 @@ def main():
 
             try:
                 data = sock.recv(1024).decode()
+                if data == '':
+                    data = None
             except Exception as e:
                 data = None
 
             if data is None:
                 print('Client closed: ', sock)
+                if sock in authenticated_sockets:
+                    username = authenticated_sockets[sock]
+                    logout_request = LogoutRequest()
+                    logout_request.username = username
+                    logout_request.handle(authenticated_sockets)
+                    authenticated_sockets.pop(sock)
+                client_sockets.remove(sock)
                 sock.close()
+
+                continue
+
+            print('***')
+            print(data)
+            print(list(data))
+            print('***')
 
             received_json = json.loads(data)
             command_id = received_json['command_id']
@@ -46,7 +63,7 @@ def main():
 
             message = cls_message()
             message.unpack(data)
-            message.socket = sock
+            message.sender_socket = sock
             messages.append(message)
 
         for message in messages:

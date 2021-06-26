@@ -60,7 +60,7 @@ button {
     font-size: 120%;
 }
 
-#name, #LastName, #phone, #userName, #password, #confirmPassword, #adress, #email, #robot {
+#error_first_name, #error_last_name, #error_phone_number, #error_username, #error_password, #error_confirm_password, #error_address, #error_mail, #error_robot {
     color: red;
 }
 

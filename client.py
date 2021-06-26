@@ -1,90 +1,60 @@
-import time
-from threading import Thread
-
 from message import LoginRequest, RegisterRequest, SendMessageRequest
 import socket
 
-from server import PORT
+from server import PORT, HOST
 
 
-def register(sock):
-    request = RegisterRequest()
-    username = input('username: ')
-    password = input('password: ')
+class Client(object):
+    def __init__(self):
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.sock.connect((HOST, PORT))
 
-    request.username = username
-    request.password = password
+    def register(self, username, password):
+        request = RegisterRequest()
+        request.username = username
+        request.password = password
 
-    sock.send(request.pack().encode())
-    status = sock.recv(1024).decode()
-    if status == 'SUCCESS':
-        return True
-    return False
+        print(request.username)
+        print(request.password)
 
-
-def login(sock):
-    request = LoginRequest()
-    username = input('username: ')
-    password = input('password: ')
-
-    request.username = username
-    request.password = password
-
-    sock.send(request.pack().encode())
-    status = sock.recv(1024).decode()
-    if status == 'SUCCESS':
-        return username
-    return None
-
-
-def send_message(sock, username):
-    thread_recv = Thread(target=handle_recv, args=(sock,))
-    thread_recv.start()
-
-    while True:
-        request = SendMessageRequest()
-        recipient = input('recipient: ')
-        message_content = input('content: ')
-
-        request.sender_username = username
-        request.recipient = recipient
-        request.message_content = message_content
-
-        sock.send(request.pack().encode())
-        status = sock.recv(1024).decode()
+        self.sock.send(request.pack().encode())
+        status = self.sock.recv(1024).decode()
         if status == 'SUCCESS':
             return True
         return False
 
+    def login(self, username, password):
+        request = LoginRequest()
 
-def handle_recv(sock):
-    while True:
-        time.sleep(2)
-        data = sock.recv(1024).decode()
+        request.username = username
+        request.password = password
 
-        if data:
+        self.sock.send(request.pack().encode())
+        status = self.sock.recv(1024).decode()
+        if status == 'SUCCESS':
+            return username
+        return None
+
+    def send_message(self, username, content, recipient):
+        request = SendMessageRequest()
+
+        request.sender_username = username
+        request.recipient = recipient
+        request.message_content = content
+
+        self.sock.send(request.pack().encode())
+        status = self.sock.recv(1024).decode()
+        if status == 'SUCCESS':
+            return True
+        return False
+
+    def handle_recv(self):
+        data = self.sock.recv(1024).decode()
+
+        # TODO: Handle server closed
+        if data:  # if len(data) != 0
             message = SendMessageRequest()
             message.unpack(data)
-            print('Got message "', message.message_content, '" From "', message.sender_username, '"')
-
-
-def main():
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.connect(('localhost', PORT))
-    while True:
-        print('[1] Register')
-        print('[2] Login')
-
-        choice = input('Enter: ')
-        if choice == '1':
-            if register(sock):
-                print('Register Success :)')
-        elif choice == '2':
-            username = login(sock)
-            if isinstance(username, str):
-                print('Login Success :)')
-                send_message(sock, username)
-
-
-if __name__ == '__main__':
-    main()
+            msg = 'Got message "' + message.message_content + '" From "' + message.sender_username + '"'
+            print(msg)
+            return msg

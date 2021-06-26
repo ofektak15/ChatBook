@@ -4,6 +4,7 @@
 <head>
     <title>Registration</title>
     <link href="css/registration_style.css" rel="stylesheet" />
+    <script type="text/javascript" src="../eel.js"></script>
     <script src="js/go_back_button.js"></script>
     <script src="js/validate_registration.js"></script>
 </head>
@@ -41,7 +42,7 @@
         <div id="MediumPassword"></div>
         <div id="StrongPassword"></div>
 
-        <input type="password" onkeyup="checkConfirmPassword(this.value);" id="confirmPassword1" name="confirmPassword1" placeholder="Confirm Password... (Required)" />
+        <input type="password" onkeyup="checkConfirmPassword(this.value);" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password... (Required)" />
         <label style="color: white; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 120%;">Confirm password</label>
         <div id="error_confirm_password"></div>
 
@@ -51,7 +52,7 @@
 
         <br />
 
-        <input type="number" onkeyup="checkAge(this.value)" id="age1" name="age1" placeholder="Age... (Required)" />
+        <input type="number" onkeyup="checkAge(this.value)" id="age" name="age" placeholder="Age... (Required)" />
         <label style="color: white; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 120%;">Age</label>
         <div style="color: red" id="error_age"></div>
 
@@ -79,13 +80,13 @@
         <label style="color: white; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 120%;">Select gender (Required)</label>
         <div id="radioStyle" style="color: white;">
             <br />
-            <input type="radio" id="male" name="gender2" value="male" onclick="checkRadio()" />
+            <input type="radio" id="male" name="gender" value="male" onclick="checkRadio()" />
             <label for="male">male</label>
             <br />
-            <input type="radio" id="female" name="gender2" value="female" onclick="checkRadio()" />
+            <input type="radio" id="female" name="gender" value="female" onclick="checkRadio()" />
             <label for="female">female</label>
             <br />
-            <input type="radio" id="other" name="gender2" value="other" onclick="checkRadio()" />
+            <input type="radio" id="other" name="gender" value="other" onclick="checkRadio()" />
             <label for="other">other</label>
 
             <br />
@@ -94,11 +95,11 @@
         <div style="color: red;" id="error_gender"></div>
 
         <br />
-        <label style="color: white; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 120%;">I'm not robot (Required)</label>
+        <!-- <label style="color: white; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 120%;">I'm not robot (Required)</label>
         <div class="g-recaptcha" data-sitekey="6LdkZdYUAAAAAGLzkkuiiM4J7dBCW9uPxJeQMs8K" data-callback="checkRobot"></div>
         <br />
         <div id="error_robot"></div>
-        <script src='https://www.recaptcha.net/recaptcha/api.js'></script>
+        <script src='https://www.recaptcha.net/recaptcha/api.js'></script> !-->
 
         <input type="submit" value="submit" />
         <input type="reset" value="Reset" />

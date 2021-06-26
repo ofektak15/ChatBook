@@ -1,21 +1,22 @@
 ﻿function validate_registration_form() {
-    var name = document.forms["ctl01"]["firstName"].value; // שם פרטי
-    var LastName = document.forms["ctl01"]["lastName"].value; // שם משפחה
-    var phone = document.forms["ctl01"]["Phone"].value; // מספר טלפון
-    var userName = document.forms["ctl01"]["UserName"].value; // שם משתמש
-    var password = document.forms["ctl01"]["Password"].value; // סיסמה
-    var MediumPassword = document.forms["ctl01"]["Password"].value; // סיסמה בינונית
-    var StrongPassword = document.forms["ctl01"]["Password"].value; // סיסמה חזקה
-    var confirmPassword = document.forms["ctl01"]["confirmPassword1"].value; // אימות סיסמה
-    var email = document.forms["ctl01"]["Email"].value; // אימייל
-    var response = grecaptcha.getResponse(); // האם רובוט
-    var gender = document.getElementsByName("gender2"); // מגדר
+    var name = document.forms["registration_form"]["firstName"].value; // שם פרטי
+    var LastName = document.forms["registration_form"]["lastName"].value; // שם משפחה
+    var phone = document.forms["registration_form"]["Phone"].value; // מספר טלפון
+    var userName = document.forms["registration_form"]["UserName"].value; // שם משתמש
+    var password = document.forms["registration_form"]["Password"].value; // סיסמה
+    var MediumPassword = document.forms["registration_form"]["Password"].value; // סיסמה בינונית
+    var StrongPassword = document.forms["registration_form"]["Password"].value; // סיסמה חזקה
+    var confirmPassword = document.forms["registration_form"]["confirmPassword"].value; // אימות סיסמה
+    var email = document.forms["registration_form"]["Email"].value; // אימייל
+    // var response = grecaptcha.getResponse(); // האם רובוט
+    var gender = document.getElementsByName("gender"); // מגדר
     var country = document.getElementById("country_select").value; // מדינה
-    var age = document.forms["ctl01"]["age1"].value; // גיל
+    var age = document.forms["registration_form"]["age"].value; // גיל
     var date = document.getElementById("date").value; // תאריך לידה
 
 
     var mode = checkName(name);
+    var status_registration = false;
 
     mode = checkLastName(LastName) && mode;
 
@@ -29,7 +30,7 @@
 
     mode = checkEmail(email) && mode;
 
-    mode = checkRobot(response) && mode;
+    // mode = checkRobot(response) && mode;
 
     mode = checkRadio(gender) && mode;
 
@@ -39,6 +40,21 @@
 
     mode = checkDateBirth(date) && mode;
 
+        // TODO: different errors for failed registration and failed checks
+        // should be mode == true
+    if (true){
+        alert("Attempting to register...");
+//        status_registration = eel.register()();
+        status_registration = eel.register(userName, password);
+        // status_registration = eel.register(userName, password);
+        alert("???");
+        return status_registration;
+    }
+    else{
+        alert("Please fix the form :)");
+        // TODO: Should redirect to login if registration succeeded
+        window.location.href="127.0.0.1:8080/login.html";
+    }
     return mode;
 }
 
@@ -272,7 +288,7 @@ function checkPassword(password, MediumPassword, StrongPassword) {
 
 // בדיקת אימות סיסמה
 function checkConfirmPassword(confirmPassword) {
-    var password = document.forms["ctl01"]["Password"].value; // סיסמה
+    var password = document.forms["registration_form"]["Password"].value; // סיסמה
 
     // אם השתמש לא הכניס אימות סיסמה
     if (confirmPassword.length == 0) {
@@ -305,7 +321,7 @@ function checkEmail(email) {
 
     // בדיקה האם המשתמש הכניס אימייל
     if (email.length == 0) {
-        document.getElementById("email").innerHTML = "You must fill out this field";
+        document.getElementById("error_mail").innerHTML = "You must fill out this field";
         return false;
     }
 
@@ -313,7 +329,7 @@ function checkEmail(email) {
     // בדיקה האם יש רווח במחרוזת
     if (indexOfSpace != -1) // יש רווח במחרוזת 
     {
-        document.getElementById("email").innerHTML = "Email can not contain space";
+        document.getElementById("error_mail").innerHTML = "Email can not contain space";
         return false;
     }
 
@@ -324,18 +340,18 @@ function checkEmail(email) {
         }
         // אם נמצא תו שאסור שיהיה באימייל
         if (wrongChar.includes(email[j])) {
-            document.getElementById("email").innerHTML = "Email can not include " + wrongChar;
+            document.getElementById("error_mail").innerHTML = "Email can not include " + wrongChar;
             return false;
         }
     }
     // אם לא נמצא סימן השטרודל
     if (numberOfShtrudels == 0) {
-        document.getElementById("email").innerHTML = "Email must contain [@]";
+        document.getElementById("error_mail").innerHTML = "Email must contain [@]";
         return false;
     }
     // אם יש יותר מסימן שטרודל אחד
     else if (numberOfShtrudels > 1) {
-        document.getElementById("email").innerHTML = "Email can not contain more than one [@]";
+        document.getElementById("error_mail").innerHTML = "Email can not contain more than one [@]";
         return false;
     }
 
@@ -346,12 +362,12 @@ function checkEmail(email) {
     }
     // בדיקה האם יש טקסט לפני השטרודל
     if (beforeShtrudel == "") {
-        document.getElementById("email").innerHTML = "Email must contain text before the [@]";
+        document.getElementById("error_mail").innerHTML = "Email must contain text before the [@]";
         return false;
     }
     // בדיקת אורך הטקסט לפני השטרודל
     else if (beforeShtrudel.length <= 5) {
-        document.getElementById("email").innerHTML = "Email must contain more than 5 characters before the [@]";
+        document.getElementById("error_mail").innerHTML = "Email must contain more than 5 characters before the [@]";
         return false;
     }
 
@@ -370,25 +386,25 @@ function checkEmail(email) {
 
     // אם אין כתוב בין השטרודל לנקודה
     if (email[shtrudelLocation + 1] == '.') {
-        document.getElementById("email").innerHTML = "Email must contain text between [@] and [.]";
+        document.getElementById("error_mail").innerHTML = "Email must contain text between [@] and [.]";
         return false;
     }
 
     // האם יש נקודה אחרי השטרודל
     if (numberOfPoints == 0) {
-        document.getElementById("email").innerHTML = "Email must contain [.] after the [@]";
+        document.getElementById("error_mail").innerHTML = "Email must contain [.] after the [@]";
         return false
     }
 
     // בדיקה אם יש יותר מנקודה אחת אחרי השטרודל
     if (numberOfPoints > 1) {
-        document.getElementById("email").innerHTML = "Email can not contain more than one [.] after [@]";
+        document.getElementById("error_mail").innerHTML = "Email can not contain more than one [.] after [@]";
         return false;
     }
 
     // (אם לא כתוב כלום אחרי הנקודה (שאחרי השטרודל
     if (email[pointLocation + 1] == null) {
-        document.getElementById("email").innerHTML = "Email must contain text after the [.]";
+        document.getElementById("error_mail").innerHTML = "Email must contain text after the [.]";
         return false;
     }
 
@@ -399,7 +415,7 @@ function checkEmail(email) {
     }
     // בדיקה האם יש מינימום תווים בין השטרודל לנקודה
     if (textBetweenShtrudelToPoint.length <= 4) {
-        document.getElementById("email").innerHTML = "Email must contain more than 4 characters between [@] to [.]";
+        document.getElementById("error_mail").innerHTML = "Email must contain more than 4 characters between [@] to [.]";
         return false;
     }
 
@@ -409,11 +425,11 @@ function checkEmail(email) {
     }
     // בדיקה האם יש מינימום תווים אחרי הנקודה
     if (textAfterPoint.length <= 2) {
-        document.getElementById("email").innerHTML = "Email must contain more than 2 characters after [.]";
+        document.getElementById("error_mail").innerHTML = "Email must contain more than 2 characters after [.]";
         return false;
     }
 
-    document.getElementById("email").innerHTML = "";
+    document.getElementById("error_mail").innerHTML = "";
     return true;
 
 }
