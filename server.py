@@ -4,8 +4,8 @@ import socket
 
 from message import MESSAGES, LogoutRequest
 
-PORT = 8091
-HOST = 'localhost'
+PORT = 8092
+HOST = '127.0.0.1'
 
 
 def main():

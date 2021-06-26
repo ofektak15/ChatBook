@@ -33,7 +33,7 @@ def login(username, password):
 
 def main():
     eel.init('web')
-    eel.start('login.html', disable_cache=True, size=(400, 675), port=8080)
+    eel.start('login.html', disable_cache=True, size=(400, 675), port=8081)
 
 
 if __name__ == '__main__':

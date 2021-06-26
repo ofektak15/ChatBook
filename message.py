@@ -133,7 +133,8 @@ class LoginRequest(Message):
         json_db = json.loads(str_db)
 
         if self.username in json_db['users'].keys():
-            hashed_password = hashlib.md5(self.password).hexdigest()
+
+            hashed_password = hashlib.md5(self.password.encode()).hexdigest()
             if hashed_password == json_db['users'][self.username]['password']:
                 authenticated_sockets[self.sender_socket] = self.username
                 json_db['users'][self.username]['is_connected'] = True
@@ -208,7 +209,7 @@ class RegisterRequest(Message):
             return
 
         json_db['users'][self.username] = {}
-        hashed_password = hashlib.md5(self.password).hexdigest()
+        hashed_password = hashlib.md5(self.password.encode()).hexdigest()
         json_db['users'][self.username]['password'] = hashed_password
         json_db['users'][self.username]['is_connected'] = False
         str_modified_db = json.dumps(json_db)
