@@ -218,5 +218,42 @@ class RegisterRequest(Message):
         self.sender_socket.send(b'SUCCESS')
 
 
-MESSAGES = {'LogoutRequest': LogoutRequest, 'SendMessageRequest': SendMessageRequest, 'LoginRequest': LoginRequest,
+class GetChatsRequest(Message):
+    def __init__(self):
+        # TODO: init the parent
+        self.command_id = 'GetChatsRequest'
+
+    def pack(self):
+        obj = {'command_id': self.command_id}
+        return json.dumps(obj)
+
+    def unpack(self, data):
+        obj = json.loads(data)
+        self.command_id = obj['command_id']
+
+    def handle(self, authenticated_sockets):
+        str_db = open('db.json', 'r').read()
+        json_db = json.loads(str_db)
+
+        if self.sender_socket not in authenticated_sockets.keys():
+            self.sender_socket.send(b'Please login first!')
+
+        list_chat_names = []
+        username = authenticated_sockets[self.sender_socket]
+        for chat_name in json_db['chats'].keys():
+            if username in json_db['chats'][chat_name]['chat_participants']:
+                if json_db['chats'][chat_name]['chat_type'] == 'private':
+                    recipients = chat_name.split(',')  # ['ofek', 'tomer']
+                    recipients.remove(username)
+                    real_chat_name = recipients[0]
+                    list_chat_names.append(real_chat_name)
+                else:  # group
+                    list_chat_names.append(chat_name)
+
+        bytes_list_chat_names = json.dumps(list_chat_names).encode()
+        self.sender_socket.send(bytes_list_chat_names)
+
+
+MESSAGES = {'GetChatsRequest': GetChatsRequest, 'LogoutRequest': LogoutRequest,
+            'SendMessageRequest': SendMessageRequest, 'LoginRequest': LoginRequest,
             'RegisterRequest': RegisterRequest}

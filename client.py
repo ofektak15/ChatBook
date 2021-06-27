@@ -1,4 +1,6 @@
-from message import LoginRequest, RegisterRequest, SendMessageRequest
+import json
+
+from message import LoginRequest, RegisterRequest, SendMessageRequest, GetChatsRequest
 import socket
 
 from server import PORT, HOST
@@ -36,9 +38,10 @@ class Client(object):
 
         self.sock.send(request.pack().encode())
         status = self.sock.recv(1024).decode()
+        print(status)
         if status == 'SUCCESS':
-            return username
-        return None
+            return True
+        return False
 
     def send_message(self, username, content, recipient):
         request = SendMessageRequest()
@@ -63,3 +66,11 @@ class Client(object):
             msg = 'Got message "' + message.message_content + '" From "' + message.sender_username + '"'
             print(msg)
             return msg
+
+    def get_chats(self):
+        request = GetChatsRequest()
+
+        self.sock.send(request.pack().encode())
+        bytes_list_chat_names = self.sock.recv(1024).decode()
+        list_chat_names = json.loads(bytes_list_chat_names)
+        return json.dumps(list_chat_names)

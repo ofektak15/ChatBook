@@ -22,13 +22,26 @@ def btn_happy():
 @eel.expose
 def register(username, password):
     print('register')
-    return client.register(username, password)
+    status = client.register(username, password)
+    if status:
+        eel.go_to('/login.html')
+    return status
 
 
 @eel.expose
 def login(username, password):
     print('login')
-    return client.login(username, password)
+    status = client.login(username, password)
+    if status:
+        print('goto chat')
+        eel.go_to('/chat.html')
+    return status
+
+
+@eel.expose
+def get_chats():
+    print('get_conversations')
+    return client.get_chats()
 
 
 def main():

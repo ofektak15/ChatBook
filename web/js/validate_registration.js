@@ -1,4 +1,10 @@
-﻿function validate_registration_form() {
+﻿// https://github.com/ChrisKnott/Eel/issues/426
+eel.expose(go_to)
+function go_to(url){
+    window.location.replace(url);
+};
+
+function validate_registration_form() {
     var name = document.forms["registration_form"]["firstName"].value; // שם פרטי
     var LastName = document.forms["registration_form"]["lastName"].value; // שם משפחה
     var phone = document.forms["registration_form"]["Phone"].value; // מספר טלפון
@@ -40,17 +46,19 @@
 
     mode = checkDateBirth(date) && mode;
 
-        // TODO: different errors for failed registration and failed checks
-        // should be mode == true
+    // TODO: different errors for failed registration and failed checks
+    // should be mode == true
     if (true){
         alert("Attempting to register...");
         status_registration = eel.register(userName, password);
+        if (!status_registration){
+            alert("Username already exists...");
+        }
         return status_registration;
     }
     else{
         alert("Please fix the form :)");
         // TODO: Should redirect to login if registration succeeded
-        window.location.href="127.0.0.1:8080/login.html";
     }
     return mode;
 }
