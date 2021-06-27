@@ -8,6 +8,5 @@
     alert("Attempting to login...");
     status_registration = eel.login(username, password);
     // TODO: different errors for failed registration and failed checks
-
     return status_registration;
 }
