@@ -44,6 +44,12 @@ def get_chats():
     return client.get_chats()
 
 
+@eel.expose
+def get_chat_messages(chat_name):
+    print('get_chat_messages')
+    return client.get_chat_messages(chat_name)
+
+
 def main():
     eel.init('web')
     eel.start('login.html', disable_cache=True, size=(400, 675), port=8081)

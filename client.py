@@ -1,6 +1,6 @@
 import json
 
-from message import LoginRequest, RegisterRequest, SendMessageRequest, GetChatsRequest
+from message import LoginRequest, RegisterRequest, SendMessageRequest, GetChatsRequest, GetChatMessagesRequest
 import socket
 
 from server import PORT, HOST
@@ -73,4 +73,12 @@ class Client(object):
         self.sock.send(request.pack().encode())
         bytes_list_chat_names = self.sock.recv(1024).decode()
         list_chat_names = json.loads(bytes_list_chat_names)
-        return json.dumps(list_chat_names)
+        return list_chat_names
+
+    def get_chat_messages(self, chat_name):
+        request = GetChatMessagesRequest()
+        request.chat_name = chat_name
+        self.sock.send(request.pack().encode())
+        bytes_list_messages = self.sock.recv(1024).decode()
+        list_messages = json.loads(bytes_list_messages)
+        return list_messages

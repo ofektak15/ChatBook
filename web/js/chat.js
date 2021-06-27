@@ -33,9 +33,26 @@ async function get_chats(){
     list_chat_names = await eel.get_chats()();
     alert(list_chat_names);
     var div_section = document.getElementById("inbox_chat");
-    for (var i; i < list_chat_names.length; i++) {
-        div_section.innerHTML += '<div class="chat_list"><div class="chat_people"><div class="chat_ib"><h5>' + list_chat_names[i] + '</h5></div></div></div>';
+    for (var i = 0; i < list_chat_names.length; i++) {
+//        div_section.innerHTML += '<div class="chat_list"><div class="chat_people"><div class="chat_ib"><h5>' + list_chat_names[i] + '</h5></div></div></div>';
+        div_section.innerHTML += '<div class="chat_list"><div class="chat_people"><div class="chat_ib"><button onclick="get_chat_messages(\''+ list_chat_names[i] +'\');">' + list_chat_names[i] + '</button></div></div></div>';
     }
+}
+async function get_chat_messages(chat_name){
+    alert("get_chat_messages...");
+    list_chat_messages = await eel.get_chat_messages(chat_name)();
+//    alert(list_chat_messages);
+//    alert(list_chat_messages);
+//    var div_section = document.getElementById("inbox_chat");
+    var msg_content = '';
+    var msg_from = '';
+    for (var i = 0; i < list_chat_messages.length; i++) {
+        msg_content = list_chat_messages[i]['message_content'];
+        msg_from = list_chat_messages[i]['from'];
+        alert("From: " + msg_from + "\nContent: " + msg_content);
+    }
+//        div_section.innerHTML += '<div class="chat_list"><div class="chat_people"><div class="chat_ib"><h5>' + list_chat_names[i] + '</h5></div></div></div>';
+//    }
 }
 
 // eel.get_chats() -> promise()
