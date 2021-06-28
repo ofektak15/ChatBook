@@ -71,9 +71,9 @@ class Client(object):
         request = GetChatsRequest()
 
         self.sock.send(request.pack().encode())
-        bytes_list_chat_names = self.sock.recv(1024).decode()
-        list_chat_names = json.loads(bytes_list_chat_names)
-        return list_chat_names
+        bytes_dict_chats = self.sock.recv(1024).decode()
+        dict_chats = json.loads(bytes_dict_chats)
+        return dict_chats
 
     def get_chat_messages(self, chat_name):
         request = GetChatMessagesRequest()

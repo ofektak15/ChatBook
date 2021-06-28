@@ -40,7 +40,7 @@ def login(username, password):
 
 @eel.expose
 def get_chats():
-    print('get_conversations')
+    print('get_chats')
     return client.get_chats()
 
 

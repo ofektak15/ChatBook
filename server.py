@@ -4,7 +4,7 @@ import socket
 
 from message import MESSAGES, LogoutRequest
 
-PORT = 8092
+PORT = 8093
 HOST = '127.0.0.1'
 
 
@@ -41,7 +41,7 @@ def main():
                 if sock in authenticated_sockets:
                     username = authenticated_sockets[sock]
                     logout_request = LogoutRequest()
-                    logout_request.sender_username = sock
+                    logout_request.sender_socket = sock
                     logout_request.username = username
                     logout_request.handle(authenticated_sockets)
                     authenticated_sockets.pop(sock)

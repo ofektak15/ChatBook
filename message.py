@@ -170,7 +170,7 @@ class LogoutRequest(Message):
         if self.sender_socket not in authenticated_sockets.keys():
             self.sender_socket.send('Please login first!')
 
-        if self.sender_username != authenticated_sockets[self.sender_socket]:
+        if self.username != authenticated_sockets[self.sender_socket]:
             self.sender_socket.send('Wrong username!')
 
         if self.username in json_db['users'].keys():
@@ -238,20 +238,16 @@ class GetChatsRequest(Message):
         if self.sender_socket not in authenticated_sockets.keys():
             self.sender_socket.send(b'Please login first!')
 
-        list_chat_names = []
+        dict_chats = {}
         username = authenticated_sockets[self.sender_socket]
         for chat_name in json_db['chats'].keys():
             if username in json_db['chats'][chat_name]['chat_participants']:
-                if json_db['chats'][chat_name]['chat_type'] == 'private':
-                    recipients = chat_name.split(',')  # ['ofek', 'tomer']
-                    recipients.remove(username)
-                    real_chat_name = recipients[0]
-                    list_chat_names.append(real_chat_name)
-                else:  # group
-                    list_chat_names.append(chat_name)
+                dict_chats[chat_name] = {'chat_participants': json_db['chats'][chat_name]['chat_participants'],
+                                         'chat_type': json_db['chats'][chat_name]['chat_type'],
+                                         'sender_username': username}
 
-        bytes_list_chat_names = json.dumps(list_chat_names).encode()
-        self.sender_socket.send(bytes_list_chat_names)
+        bytes_dict_chats = json.dumps(dict_chats).encode()
+        self.sender_socket.send(bytes_dict_chats)
 
 
 class GetChatMessagesRequest(Message):
