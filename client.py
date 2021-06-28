@@ -80,5 +80,5 @@ class Client(object):
         request.chat_name = chat_name
         self.sock.send(request.pack().encode())
         bytes_list_messages = self.sock.recv(1024).decode()
-        list_messages = json.loads(bytes_list_messages)
-        return list_messages
+        dict_messages = json.loads(bytes_list_messages)
+        return dict_messages

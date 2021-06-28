@@ -272,7 +272,6 @@ class GetChatMessagesRequest(Message):
         if self.sender_socket not in authenticated_sockets.keys():
             self.sender_socket.send(b'Please login first!')
 
-        list_messages = []
         username = authenticated_sockets[self.sender_socket]
         if self.chat_name not in json_db['chats']:
             self.sender_socket.send(b'FAIL')
@@ -281,8 +280,9 @@ class GetChatMessagesRequest(Message):
             self.sender_socket.send(b'FAIL')
             return
         list_messages = json_db['chats'][self.chat_name]['chat_messages']
-        bytes_list_messages = json.dumps(list_messages).encode()
-        self.sender_socket.send(bytes_list_messages)
+        dict_messages = {'username': username, 'list_messages': list_messages}
+        bytes_dict_messages = json.dumps(dict_messages).encode()
+        self.sender_socket.send(bytes_dict_messages)
 
 
 MESSAGES = {'GetChatMessagesRequest': GetChatMessagesRequest, 'GetChatsRequest': GetChatsRequest,

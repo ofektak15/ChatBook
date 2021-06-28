@@ -55,8 +55,11 @@ async function get_chats(){
 }
 async function get_chat_messages(chat_name, shown_chat_name){
     alert("get_chat_messages...");
-    list_chat_messages = await eel.get_chat_messages(chat_name)();
+    var div_section = document.getElementById("msg_history");
 
+    var dict_messages = await eel.get_chat_messages(chat_name)();
+    var list_chat_messages = dict_messages['list_messages'];
+    var username = dict_messages['username'];
     select_active_chat(shown_chat_name);
 //    alert(list_chat_messages);
 //    alert(list_chat_messages);
@@ -65,8 +68,15 @@ async function get_chat_messages(chat_name, shown_chat_name){
     var msg_from = '';
     for (var i = 0; i < list_chat_messages.length; i++) {
         msg_content = list_chat_messages[i]['message_content'];
+
         msg_from = list_chat_messages[i]['from'];
-        alert("From: " + msg_from + "\nContent: " + msg_content);
+        if (msg_from == username){
+            div_section.innerHTML += '<div class="outgoing_msg"><div class="sent_msg"></div><div class="sent_msg"><div class="sent_withd_msg"><p>' + msg_content + '</p><span class="time_date"> 11:01 AM    |    June 9</span></div></div></div>'
+        }
+        else{
+            div_section.innerHTML += '<div class="incoming_msg"><div class="incoming_msg_img"><img src="img/default_profile_icon.png" alt="profile"></div><div class="received_msg"><div class="received_withd_msg"><p>' + msg_content + '</p><span class="time_date"> 11:01 AM    |    June 9</span></div></div></div>'
+        }
+//        alert("From: " + msg_from + "\nContent: " + msg_content);
     }
 }
 
