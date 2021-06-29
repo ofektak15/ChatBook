@@ -1,6 +1,7 @@
 import json
 
-from message import LoginRequest, RegisterRequest, SendMessageRequest, GetChatsRequest, GetChatMessagesRequest
+from message import LoginRequest, RegisterRequest, SendMessageRequest, GetChatsRequest, GetChatMessagesRequest, \
+    GetUsernameRequest
 import socket
 
 from server import PORT, HOST
@@ -32,10 +33,11 @@ class Client(object):
         request.username = username
         request.password = password
 
-        print('login')
+        print('login - client')
         print(request.username)
         print(request.password)
 
+        print("request sent to server: " + request.pack())
         self.sock.send(request.pack().encode())
         status = self.sock.recv(1024).decode()
         print(status)
@@ -82,3 +84,9 @@ class Client(object):
         bytes_list_messages = self.sock.recv(1024).decode()
         dict_messages = json.loads(bytes_list_messages)
         return dict_messages
+
+    def get_username(self):
+        request = GetUsernameRequest()
+        self.sock.send(request.pack().encode())
+        username = self.sock.recv(1024).decode()
+        return username

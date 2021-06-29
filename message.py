@@ -19,273 +19,28 @@ class Message(object):
         raise NotImplementedError
 
 
-class SendMessageRequest(Message):
-    TYPE_BROADCAST = 'BROADCAST_MESSAGE'
-    TYPE_PRIVATE = 'PRIVATE_MESSAGE'
-
-    def __init__(self):
-        # TODO: init the parent
-        self.command_id = 'SendMessageRequest'
-        self.sender_username = None
-        self.recipients = None
-        self.type_of_message = None
-        self.message_content = None
-        self.group_name = None
-
-    def pack(self):
-        obj = {'command_id': self.command_id,
-               'username': self.sender_username,
-               'recpients': self.recipients,
-               'group_name': self.group_name,
-               'type_of_message': self.type_of_message,
-               'message_content': self.message_content}
-        return json.dumps(obj)
-
-    def unpack(self, data):
-        obj = json.loads(data)
-        self.command_id = obj['command_id']
-        self.sender_username = obj['username']
-        self.recipients = obj['recpients']
-        self.group_name = obj['group_name']
-        self.type_of_message = obj['type_of_message']
-        self.message_content = obj['message_content']
-
-    def handle(self, authenticated_sockets):
-        str_db = open('db.json', 'r').read()
-        json_db = json.loads(str_db)
-
-        if self.sender_socket not in authenticated_sockets.keys():
-            self.sender_socket.send(b'Please login first!')
-
-        if self.sender_username != authenticated_sockets[self.sender_socket]:
-            self.sender_socket.send(b'Wrong username!')
-
-        if self.type_of_message == 'private':
-            recipients = self.recipients.split(',')  # ['ofek', 'tomer']
-            recipients.remove(self.sender_username)
-            recipient_username = recipients[0]
-            if self.recipients not in json_db['chats']:
-                json_db['chats'][self.recipients] = {}
-                json_db['chats'][self.recipients]['chat_type'] = 'private'
-                json_db['chats'][self.recipients]['chat_messages'] = []
-                json_db['chats'][self.recipients]['participants'] = self.recipients.split(',')
-
-            json_db['chats'][self.recipients]['chat_messages'].append({'message_content': self.message_content,
-                                                                       'from': self.sender_username,
-                                                                       'time': str(time.time()),
-                                                                       'received': [self.sender_username]})
-
-            for socket, username in authenticated_sockets.items():
-                if username == recipient_username:
-                    socket.send(self.pack().encode())
-                    json_db['chats'][self.recipients]['chat_messages'][-1]['received'].append(username)
-
-            str_modified_db = json.dumps(json_db)
-            open('db.json', 'w').write(str_modified_db)
-            self.sender_socket.send(b'SUCCESS')
-            return
-
-        elif self.type_of_message == 'group':
-            if self.group_name not in json_db['chats']:
-                json_db['chats'][self.group_name] = {}
-                json_db['chats'][self.recipients]['chat_type'] = 'group'
-                json_db['chats'][self.recipients]['participants'] = self.recipients.split(',')
-                json_db['chats'][self.recipients]['chat_messages'] = []
-
-            json_db['chats'][self.group_name]['chat_messages'].append({'message_content': self.message_content,
-                                                                       'from': self.sender_username,
-                                                                       'time': str(time.time()),
-                                                                       'received': [self.sender_username]})
-
-            true_recipients = self.recipients.split(',').remove(self.sender_username)
-            for socket, username in authenticated_sockets.items():
-                if username in true_recipients:
-                    socket.send(self.pack().encode())
-                    json_db['chats'][self.group_name]['chat_messages'][-1]['received'].append(username)
-
-            str_modified_db = json.dumps(json_db)
-            open('db.json', 'w').write(str_modified_db)
-            self.sender_socket.send(b'SUCCESS')
-            return
-
-        self.sender_socket.send(b'FAIL')
 
 
-class LoginRequest(Message):
-    def __init__(self):
-        # TODO: init the parent
-        self.command_id = 'LoginRequest'
-        self.username = None
-        self.password = None
-
-    def pack(self):
-        obj = {'command_id': self.command_id, 'username': self.username, 'password': self.password}
-        return json.dumps(obj)
-
-    def unpack(self, data):
-        obj = json.loads(data)
-        self.command_id = obj['command_id']
-        self.username = obj['username']
-        self.password = obj['password']
-
-    def handle(self, authenticated_sockets):
-        str_db = open('db.json', 'r').read()
-        json_db = json.loads(str_db)
-
-        if self.username in json_db['users'].keys():
-            hashed_password = hashlib.md5(self.password.encode()).hexdigest()
-            if hashed_password == json_db['users'][self.username]['password']:
-                authenticated_sockets[self.sender_socket] = self.username
-                if not json_db['users'][self.username]['is_connected']:
-                    json_db['users'][self.username]['is_connected'] = True
-                    str_modified_db = json.dumps(json_db)
-                    open('db.json', 'w').write(str_modified_db)
-                    self.sender_socket.send(b'SUCCESS')
-                    return
-        # DB
-        # SOCKET OF LOGGED USERS
-        self.sender_socket.send(b'FAIL')
 
 
-class LogoutRequest(Message):
-    def __init__(self):
-        # TODO: init the parent
-        self.command_id = 'LogoutRequest'
-        self.username = None
-        self.password = None
-
-    def pack(self):
-        obj = {'command_id': self.command_id, 'username': self.username}
-        return json.dumps(obj)
-
-    def unpack(self, data):
-        obj = json.loads(data)
-        self.command_id = obj['command_id']
-        self.username = obj['username']
-
-    def handle(self, authenticated_sockets):
-        str_db = open('db.json', 'r').read()
-        json_db = json.loads(str_db)
-
-        if self.sender_socket not in authenticated_sockets.keys():
-            self.sender_socket.send('Please login first!')
-
-        if self.username != authenticated_sockets[self.sender_socket]:
-            self.sender_socket.send('Wrong username!')
-
-        if self.username in json_db['users'].keys():
-            json_db['users'][self.username]['is_connected'] = False
-            str_modified_db = json.dumps(json_db)
-            open('db.json', 'w').write(str_modified_db)
-            self.sender_socket.send(b'SUCCESS')
-            return
-
-        self.sender_socket.send(b'FAIL')
 
 
-class RegisterRequest(Message):
-    def __init__(self):
-        # TODO: init the parent
-        self.command_id = 'RegisterRequest'
-        self.username = None
-        self.password = None
-
-    def pack(self):
-        obj = {'command_id': self.command_id, 'username': self.username, 'password': self.password}
-        return json.dumps(obj)
-
-    def unpack(self, data):
-        obj = json.loads(data)
-        self.command_id = obj['command_id']
-        self.username = obj['username']
-        self.password = obj['password']
-
-    def handle(self, authenticated_sockets):
-        str_db = open('db.json', 'r').read()
-        json_db = json.loads(str_db)
-
-        if self.username in json_db['users'].keys():
-            self.sender_socket.send(b'FAIL')
-            return
-
-        json_db['users'][self.username] = {}
-        hashed_password = hashlib.md5(self.password.encode()).hexdigest()
-        json_db['users'][self.username]['password'] = hashed_password
-        json_db['users'][self.username]['is_connected'] = False
-        str_modified_db = json.dumps(json_db)
-        open('db.json', 'w').write(str_modified_db)
-
-        self.sender_socket.send(b'SUCCESS')
 
 
-class GetChatsRequest(Message):
-    def __init__(self):
-        # TODO: init the parent
-        self.command_id = 'GetChatsRequest'
-
-    def pack(self):
-        obj = {'command_id': self.command_id}
-        return json.dumps(obj)
-
-    def unpack(self, data):
-        obj = json.loads(data)
-        self.command_id = obj['command_id']
-
-    def handle(self, authenticated_sockets):
-        str_db = open('db.json', 'r').read()
-        json_db = json.loads(str_db)
-
-        if self.sender_socket not in authenticated_sockets.keys():
-            self.sender_socket.send(b'Please login first!')
-
-        dict_chats = {}
-        username = authenticated_sockets[self.sender_socket]
-        for chat_name in json_db['chats'].keys():
-            if username in json_db['chats'][chat_name]['chat_participants']:
-                dict_chats[chat_name] = {'chat_participants': json_db['chats'][chat_name]['chat_participants'],
-                                         'chat_type': json_db['chats'][chat_name]['chat_type'],
-                                         'sender_username': username}
-
-        bytes_dict_chats = json.dumps(dict_chats).encode()
-        self.sender_socket.send(bytes_dict_chats)
 
 
-class GetChatMessagesRequest(Message):
-    def __init__(self):
-        # TODO: init the parent
-        self.command_id = 'GetChatMessagesRequest'
-        self.chat_name = None
 
-    def pack(self):
-        obj = {'command_id': self.command_id, 'chat_name': self.chat_name}
-        return json.dumps(obj)
 
-    def unpack(self, data):
-        obj = json.loads(data)
-        self.command_id = obj['command_id']
-        self.chat_name = obj['chat_name']
 
-    def handle(self, authenticated_sockets):
-        str_db = open('db.json', 'r').read()
-        json_db = json.loads(str_db)
 
-        if self.sender_socket not in authenticated_sockets.keys():
-            self.sender_socket.send(b'Please login first!')
 
-        username = authenticated_sockets[self.sender_socket]
-        if self.chat_name not in json_db['chats']:
-            self.sender_socket.send(b'FAIL')
-            return
-        if username not in json_db['chats'][self.chat_name]['chat_participants']:
-            self.sender_socket.send(b'FAIL')
-            return
-        list_messages = json_db['chats'][self.chat_name]['chat_messages']
-        dict_messages = {'username': username, 'list_messages': list_messages}
-        bytes_dict_messages = json.dumps(dict_messages).encode()
-        self.sender_socket.send(bytes_dict_messages)
+
+
+
 
 
 MESSAGES = {'GetChatMessagesRequest': GetChatMessagesRequest, 'GetChatsRequest': GetChatsRequest,
             'LogoutRequest': LogoutRequest,
             'SendMessageRequest': SendMessageRequest, 'LoginRequest': LoginRequest,
-            'RegisterRequest': RegisterRequest}
+            'RegisterRequest': RegisterRequest,
+            'GetUsernameRequest': GetUsernameRequest}

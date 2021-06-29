@@ -30,12 +30,18 @@ def register(username, password):
 
 @eel.expose
 def login(username, password):
-    print('login')
+    print('login - web')
     status = client.login(username, password)
     if status:
         print('goto chat')
         eel.go_to('/chat.html')
     return status
+
+
+@eel.expose
+def get_username():
+    username = client.get_username()
+    return username
 
 
 @eel.expose

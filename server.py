@@ -52,7 +52,6 @@ def main():
 
             print('***')
             print(data)
-            print(list(data))
             print('***')
 
             received_json = json.loads(data)

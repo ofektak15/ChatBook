@@ -47,3 +47,7 @@ span.psw {
     float: right;
     padding-top: 16px;
 }
+
+#error_password, #error_username, #general_error{
+    color: red
+}

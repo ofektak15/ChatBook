@@ -80,6 +80,12 @@ async function get_chat_messages(chat_name, shown_chat_name){
     }
 }
 
+function say_hello_to_username(username){
+    var div_section = document.getElementById("text-center");
+    div_section.innerHTML = "Hello " + username + "!"
+}
+
+
 function select_active_chat(shown_chat_name){
     var div_section = document.getElementById("inbox_chat");
     var div_objs = div_section.getElementsByTagName('div');
