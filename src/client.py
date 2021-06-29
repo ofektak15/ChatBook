@@ -1,19 +1,18 @@
 import json
 import socket
-from server import PORT, HOST
-
-from login_request import LoginRequest
-from register_request import RegisterRequest
-from send_message_request import SendMessageRequest
-from get_chats_request import GetChatsRequest
-from get_chat_messages_request import GetChatMessagesRequest
-from get_username_request import GetUsernameRequest
+from src.consts import Consts
+from src.requests.get_chat_messages_request import GetChatMessagesRequest
+from src.requests.get_chats_request import GetChatsRequest
+from src.requests.get_username_request import GetUsernameRequest
+from src.requests.login_request import LoginRequest
+from src.requests.register_request import RegisterRequest
+from src.requests.send_message_request import SendMessageRequest
 
 
 class Client(object):
     def __init__(self):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.sock.connect((HOST, PORT))
+        self.sock.connect((Consts.HOST, Consts.PORT))
 
     def register(self, username, password):
         request = RegisterRequest()

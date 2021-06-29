@@ -1,4 +1,4 @@
-from client import Client
+from src.client import Client
 import eel
 
 client = Client()

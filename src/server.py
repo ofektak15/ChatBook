@@ -1,30 +1,14 @@
+from src.consts import Consts
 import json
 import select
 import socket
 
-from logout_request import LogoutRequest
-from login_request import LoginRequest
-from register_request import RegisterRequest
-from send_message_request import SendMessageRequest
-from get_chats_request import GetChatsRequest
-from get_chat_messages_request import GetChatMessagesRequest
-from get_username_request import GetUsernameRequest
+from src.requests.logout_request import LogoutRequest
 
-PORT = 8093
-HOST = '127.0.0.1'
-
-MESSAGES = {
-                'GetChatMessagesRequest': GetChatMessagesRequest,
-                'GetChatsRequest': GetChatsRequest,
-                'LogoutRequest': LogoutRequest,
-                'SendMessageRequest': SendMessageRequest, 'LoginRequest': LoginRequest,
-                'RegisterRequest': RegisterRequest,
-                'GetUsernameRequest': GetUsernameRequest
-                }
 
 def main():
     server_socket = socket.socket()
-    server_socket.bind(("0.0.0.0", PORT))
+    server_socket.bind(("0.0.0.0", Consts.PORT))
     server_socket.listen(50)
     server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
@@ -70,7 +54,7 @@ def main():
 
             received_json = json.loads(data)
             command_id = received_json['command_id']
-            cls_message = MESSAGES.get(command_id, None)
+            cls_message = Consts.MESSAGES.get(command_id, None)
             if cls_message is None:
                 print('Unexpected command_id: ', command_id)
                 continue

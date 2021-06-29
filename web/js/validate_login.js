@@ -4,7 +4,7 @@ function go_to(url){
     window.location.replace(url);
 };
 
-function validate_login() {
+async function validate_login() {
     var username = document.getElementById("username").value;
     var password = document.getElementById("password").value;
 
@@ -22,7 +22,7 @@ function validate_login() {
         document.getElementById("error_password").innerHTML = "";
     }
     alert("Attempting to login...");
-    status_registration = eel.login(username, password);
+    status_registration = await eel.login(username, password)();
     alert(status_registration)
     if (status_registration == "False"){
         document.getElementById("general_error").innerHTML = "Username or password does not match.";

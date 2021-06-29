@@ -1,4 +1,4 @@
-from message import Message
+from src.requests.message import Message
 import json
 import time
 import hashlib
