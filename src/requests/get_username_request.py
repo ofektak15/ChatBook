@@ -19,4 +19,9 @@ class GetUsernameRequest(Message):
         self.username = obj['username']
 
     def handle(self, authenticated_sockets):
-        self.sender_socket.send(self.username)
+        if self.sender_socket not in authenticated_sockets.keys():
+            self.sender_socket.send(b'Please login first!')
+
+        username = authenticated_sockets[self.sender_socket]
+
+        self.sender_socket.send(username.encode())

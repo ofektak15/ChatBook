@@ -80,7 +80,9 @@ async function get_chat_messages(chat_name, shown_chat_name){
     }
 }
 
-function say_hello_to_username(username){
+async function say_hello_to_username(){
+    var username = await eel.get_username()();
+
     var div_section = document.getElementById("text-center");
     div_section.innerHTML = "Hello " + username + "!"
 }
