@@ -15,7 +15,7 @@
 
 </head>
 <body>
-<script>window.setInterval(function() {get_chats();}, 500)</script>
+<script>get_chats(); window.setInterval(function() {get_chats();}, 4000)</script>
 <!--get_chat_messages-->
 <div class="container">
     <h3 class="text-center" id="text-center"></h3>
@@ -94,9 +94,10 @@
                 </div>
                 <div class="type_msg">
                     <div class="input_msg_write">
-                        <input type="text" class="write_msg" placeholder="Type a message"/>
-                        <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o"
-                                                                      aria-hidden="true"></i></button>
+                        <input type="text" class="write_msg" id="input_write_msg" placeholder="Type a message"/>
+                        <button class="msg_send_btn" type="button" onclick="send_message();"><i
+                                class="fa fa-paper-plane-o"
+                                aria-hidden="true"></i></button>
                     </div>
                 </div>
             </div>

@@ -1,3 +1,5 @@
+import random
+
 from src.client import Client
 import eel
 
@@ -56,9 +58,17 @@ def get_chat_messages(chat_name):
     return client.get_chat_messages(chat_name)
 
 
+@eel.expose
+def send_message(username, chatname, content, chat_type):
+    print('send_message')
+    return client.send_message(username, chatname, content, chat_type)
+
+
 def main():
     eel.init('web')
-    eel.start('login.html', disable_cache=True, size=(400, 675), port=8081)
+    rnd = random.randint(0, 1000)
+    print('using port: {}'.format(8080 + rnd))
+    eel.start('login.html', disable_cache=True, size=(400, 675), port=8080 + rnd)
 
 
 if __name__ == '__main__':

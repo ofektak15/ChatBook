@@ -53,7 +53,7 @@ class SendMessageRequest(Message):
                 json_db['chats'][self.recipients] = {}
                 json_db['chats'][self.recipients]['chat_type'] = 'private'
                 json_db['chats'][self.recipients]['chat_messages'] = []
-                json_db['chats'][self.recipients]['participants'] = self.recipients.split(',')
+                json_db['chats'][self.recipients]['chat_participants'] = self.recipients.split(',')
 
             json_db['chats'][self.recipients]['chat_messages'].append({'message_content': self.message_content,
                                                                        'from': self.sender_username,
@@ -73,19 +73,22 @@ class SendMessageRequest(Message):
         elif self.type_of_message == 'group':
             if self.group_name not in json_db['chats']:
                 json_db['chats'][self.group_name] = {}
-                json_db['chats'][self.recipients]['chat_type'] = 'group'
-                json_db['chats'][self.recipients]['participants'] = self.recipients.split(',')
-                json_db['chats'][self.recipients]['chat_messages'] = []
+                json_db['chats'][self.group_name]['chat_type'] = 'group'
+                json_db['chats'][self.group_name]['chat_participants'] = self.recipients.split(',')
+                json_db['chats'][self.group_name]['chat_messages'] = []
 
             json_db['chats'][self.group_name]['chat_messages'].append({'message_content': self.message_content,
                                                                        'from': self.sender_username,
                                                                        'time': str(time.time()),
                                                                        'received': [self.sender_username]})
 
-            true_recipients = self.recipients.split(',').remove(self.sender_username)
+            list_from_db = json_db['chats'][self.group_name]['chat_participants']
+            true_recipients = list(list_from_db)
+            true_recipients.remove(self.sender_username)
+
             for socket, username in authenticated_sockets.items():
                 if username in true_recipients:
-                    socket.send(self.pack().encode())
+                    # socket.send(self.pack().encode())
                     json_db['chats'][self.group_name]['chat_messages'][-1]['received'].append(username)
 
             str_modified_db = json.dumps(json_db)

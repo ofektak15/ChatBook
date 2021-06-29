@@ -24,7 +24,7 @@ class Client(object):
         print(request.password)
 
         self.sock.send(request.pack().encode())
-        status = self.sock.recv(1024).decode()
+        status = self.sock.recv(1024 * 1024).decode()
         if status == 'SUCCESS':
             return True
         return False
@@ -41,27 +41,29 @@ class Client(object):
 
         print("request sent to server: " + request.pack())
         self.sock.send(request.pack().encode())
-        status = self.sock.recv(1024).decode()
+        status = self.sock.recv(1024 * 1024).decode()
         print(status)
         if status == 'SUCCESS':
             return True
         return False
 
-    def send_message(self, username, content, recipient):
+    def send_message(self, username, recipient, content, chat_type):
         request = SendMessageRequest()
 
         request.sender_username = username
-        request.recipient = recipient
+        request.recipients = recipient
+        request.group_name = recipient
+        request.type_of_message = chat_type
         request.message_content = content
 
         self.sock.send(request.pack().encode())
-        status = self.sock.recv(1024).decode()
+        status = self.sock.recv(1024 * 1024).decode()
         if status == 'SUCCESS':
             return True
         return False
 
     def handle_recv(self):
-        data = self.sock.recv(1024).decode()
+        data = self.sock.recv(1024 * 1024).decode()
 
         # TODO: Handle server closed
         if data:  # if len(data) != 0
@@ -75,7 +77,8 @@ class Client(object):
         request = GetChatsRequest()
 
         self.sock.send(request.pack().encode())
-        bytes_dict_chats = self.sock.recv(1024).decode()
+        bytes_dict_chats = self.sock.recv(1024 * 1024).decode()
+        print('get_chats: ' + bytes_dict_chats)
         dict_chats = json.loads(bytes_dict_chats)
         return dict_chats
 
@@ -83,12 +86,13 @@ class Client(object):
         request = GetChatMessagesRequest()
         request.chat_name = chat_name
         self.sock.send(request.pack().encode())
-        bytes_list_messages = self.sock.recv(1024).decode()
+        bytes_list_messages = self.sock.recv(1024 * 1024).decode()
+        print('get_chat_messages: ' + bytes_list_messages)
         dict_messages = json.loads(bytes_list_messages)
         return dict_messages
 
     def get_username(self):
         request = GetUsernameRequest()
         self.sock.send(request.pack().encode())
-        username = self.sock.recv(1024).decode()
+        username = self.sock.recv(1024 * 1024).decode()
         return username

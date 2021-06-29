@@ -1,1 +1,206 @@
-{"users": {"ofek": {"password": "81dc9bdb52d04dc20036dbd8313ed055", "is_connected": true}, "tomer": {"password": "81dc9bdb52d04dc20036dbd8313ed055", "is_connected": false}, "hello1234": {"password": "fa80a258216ef839e4bc5a849da52fb0", "is_connected": false}, "": {"password": "d41d8cd98f00b204e9800998ecf8427e", "is_connected": false}, "abcdf123": {"password": "c8acd27cc42b380585b96452ecfa3fe7", "is_connected": false}}, "chats": {"thekings": {"chat_type": "group", "chat_participants": ["ofek", "tomer", "adam"], "chat_messages": [{"from": "ofek", "message_content": "hi", "time": "21:22", "received": ["ofek", "tomer", "adam"]}, {"from": "tomer", "message_content": "heyy", "time": "21:23", "received": ["ofek", "tomer"]}]}, "ofek,tomer": {"chat_type": "private", "chat_participants": ["ofek", "tomer"], "chat_messages": [{"from": "ofek", "message_content": "hi", "time": "21:22", "received": ["ofek", "tomer"]}, {"from": "tomer", "message_content": "heyy", "time": "21:23", "received": ["tomer"]}]}}}
+{
+  "users": {
+    "ofek": {
+      "password": "81dc9bdb52d04dc20036dbd8313ed055",
+      "is_connected": false
+    },
+    "tomer": {
+      "password": "81dc9bdb52d04dc20036dbd8313ed055",
+      "is_connected": false
+    },
+    "hello1234": {
+      "password": "fa80a258216ef839e4bc5a849da52fb0",
+      "is_connected": false
+    },
+    "": {
+      "password": "d41d8cd98f00b204e9800998ecf8427e",
+      "is_connected": false
+    },
+    "abcdf123": {
+      "password": "c8acd27cc42b380585b96452ecfa3fe7",
+      "is_connected": false
+    }
+  },
+  "chats": {
+    "thekings": {
+      "chat_type": "group",
+      "chat_participants": [
+        "tomer",
+        "adam",
+        "ofek"
+      ],
+      "chat_messages": [
+        {
+          "from": "ofek",
+          "message_content": "hi",
+          "time": "21:22",
+          "received": [
+            "ofek",
+            "tomer",
+            "adam"
+          ]
+        },
+        {
+          "from": "tomer",
+          "message_content": "see ya",
+          "time": "21:23",
+          "received": [
+            "ofek",
+            "tomer"
+          ]
+        },
+        {
+          "from": "ofek",
+          "message_content": "see ya soon!",
+          "time": "21:23",
+          "received": [
+            "ofek",
+            "tomer"
+          ]
+        },
+        {
+          "message_content": "hola",
+          "from": "ofek",
+          "time": "1624997014.867774",
+          "received": [
+            "ofek"
+          ]
+        },
+        {
+          "message_content": "magniv",
+          "from": "ofek",
+          "time": "1624997338.3271751",
+          "received": [
+            "ofek"
+          ]
+        },
+        {
+          "message_content": "super",
+          "from": "ofek",
+          "time": "1624997509.0451458",
+          "received": [
+            "ofek"
+          ]
+        },
+        {
+          "message_content": "blah",
+          "from": "ofek",
+          "time": "1624997556.0730371",
+          "received": [
+            "ofek"
+          ]
+        },
+        {
+          "message_content": "blah",
+          "from": "ofek",
+          "time": "1624997669.931812",
+          "received": [
+            "ofek"
+          ]
+        },
+        {
+          "message_content": "yoyo",
+          "from": "ofek",
+          "time": "1624997749.063518",
+          "received": [
+            "ofek"
+          ]
+        },
+        {
+          "message_content": "blha",
+          "from": "ofek",
+          "time": "1624997827.0395977",
+          "received": [
+            "ofek"
+          ]
+        },
+        {
+          "message_content": "sababa",
+          "from": "tomer",
+          "time": "1624997876.9786499",
+          "received": [
+            "tomer"
+          ]
+        },
+        {
+          "message_content": "yes!!!!! success!",
+          "from": "ofek",
+          "time": "1624998644.546811",
+          "received": [
+            "ofek",
+            "tomer"
+          ]
+        },
+        {
+          "message_content": "nice!",
+          "from": "ofek",
+          "time": "1624998853.9771667",
+          "received": [
+            "ofek",
+            "tomer"
+          ]
+        },
+        {
+          "message_content": "how are you?",
+          "from": "ofek",
+          "time": "1624999030.8311243",
+          "received": [
+            "ofek",
+            "tomer"
+          ]
+        }
+      ]
+    },
+    "ofek,tomer": {
+      "chat_type": "private",
+      "chat_participants": [
+        "ofek",
+        "tomer"
+      ],
+      "chat_messages": [
+        {
+          "from": "ofek",
+          "message_content": "hi",
+          "time": "21:22",
+          "received": [
+            "ofek",
+            "tomer"
+          ]
+        },
+        {
+          "from": "tomer",
+          "message_content": "awesome day",
+          "time": "21:23",
+          "received": [
+            "tomer"
+          ]
+        },
+        {
+          "from": "tomer",
+          "message_content": "sup",
+          "time": "21:23",
+          "received": [
+            "tomer"
+          ]
+        },
+        {
+          "from": "tomer",
+          "message_content": "great day!",
+          "time": "21:23",
+          "received": [
+            "tomer"
+          ]
+        },
+        {
+          "message_content": "shalom!",
+          "from": "ofek",
+          "time": "1624998874.855102",
+          "received": [
+            "ofek",
+            "tomer"
+          ]
+        }
+      ]
+    }
+  }
+}
