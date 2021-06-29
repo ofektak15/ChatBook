@@ -1,6 +1,10 @@
-import json
-import time
-import hashlib
+from login_request import LoginRequest
+from register_request import RegisterRequest
+from send_message_request import SendMessageRequest
+from get_chats_request import GetChatsRequest
+from get_chat_messages_request import GetChatMessagesRequest
+from get_username_request import GetUsernameRequest
+from logout_request import LogoutRequest
 
 
 class Message(object):
@@ -19,6 +23,14 @@ class Message(object):
         raise NotImplementedError
 
 
+MESSAGES = {
+                'GetChatMessagesRequest': GetChatMessagesRequest,
+                'GetChatsRequest': GetChatsRequest,
+                'LogoutRequest': LogoutRequest,
+                'SendMessageRequest': SendMessageRequest, 'LoginRequest': LoginRequest,
+                'RegisterRequest': RegisterRequest,
+                'GetUsernameRequest': GetUsernameRequest
+                }
 
 
 
@@ -39,8 +51,3 @@ class Message(object):
 
 
 
-MESSAGES = {'GetChatMessagesRequest': GetChatMessagesRequest, 'GetChatsRequest': GetChatsRequest,
-            'LogoutRequest': LogoutRequest,
-            'SendMessageRequest': SendMessageRequest, 'LoginRequest': LoginRequest,
-            'RegisterRequest': RegisterRequest,
-            'GetUsernameRequest': GetUsernameRequest}

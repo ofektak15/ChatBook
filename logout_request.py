@@ -1,7 +1,8 @@
-from message import Message
 import json
 import time
 import hashlib
+
+from message import Message
 
 
 class LogoutRequest(Message):

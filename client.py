@@ -1,10 +1,13 @@
 import json
-
-from message import LoginRequest, RegisterRequest, SendMessageRequest, GetChatsRequest, GetChatMessagesRequest, \
-    GetUsernameRequest
 import socket
-
 from server import PORT, HOST
+
+from login_request import LoginRequest
+from register_request import RegisterRequest
+from send_message_request import SendMessageRequest
+from get_chats_request import GetChatsRequest
+from get_chat_messages_request import GetChatMessagesRequest
+from get_username_request import GetUsernameRequest
 
 
 class Client(object):

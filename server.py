@@ -2,11 +2,25 @@ import json
 import select
 import socket
 
-from message import MESSAGES, LogoutRequest
+from logout_request import LogoutRequest
+from login_request import LoginRequest
+from register_request import RegisterRequest
+from send_message_request import SendMessageRequest
+from get_chats_request import GetChatsRequest
+from get_chat_messages_request import GetChatMessagesRequest
+from get_username_request import GetUsernameRequest
 
 PORT = 8093
 HOST = '127.0.0.1'
 
+MESSAGES = {
+                'GetChatMessagesRequest': GetChatMessagesRequest,
+                'GetChatsRequest': GetChatsRequest,
+                'LogoutRequest': LogoutRequest,
+                'SendMessageRequest': SendMessageRequest, 'LoginRequest': LoginRequest,
+                'RegisterRequest': RegisterRequest,
+                'GetUsernameRequest': GetUsernameRequest
+                }
 
 def main():
     server_socket = socket.socket()
