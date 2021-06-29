@@ -29,10 +29,11 @@
 
 
 async function get_chats(){
-    alert("get_chats...");
+//    alert("get_chats...");
     dict_chats = await eel.get_chats()();
-    alert(dict_chats);
+//    alert(dict_chats);
     var div_section = document.getElementById("inbox_chat");
+    div_section.innerHTML = '';
     for(var chat_name in dict_chats){
         var chat_dict = dict_chats[chat_name];
         var chat_participants = chat_dict['chat_participants'];
@@ -54,7 +55,7 @@ async function get_chats(){
     }
 }
 async function get_chat_messages(chat_name, shown_chat_name){
-    alert("get_chat_messages...");
+//    alert("get_chat_messages...");
     var div_section = document.getElementById("msg_history");
 
     var dict_messages = await eel.get_chat_messages(chat_name)();

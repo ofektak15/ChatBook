@@ -21,9 +21,9 @@ async function validate_login() {
     else{
         document.getElementById("error_password").innerHTML = "";
     }
-    alert("Attempting to login...");
+//    alert("Attempting to login...");
     status_registration = await eel.login(username, password)();
-    alert(status_registration)
+//    alert(status_registration)
     if (status_registration == false){
         document.getElementById("general_error").innerHTML = "Username or password does not match.";
         return false;
