@@ -1,7 +1,6 @@
 from src.requests.message import Message
 import json
-import time
-import hashlib
+import datetime
 
 
 class GetChatsRequest(Message):
@@ -28,9 +27,22 @@ class GetChatsRequest(Message):
         username = authenticated_sockets[self.sender_socket]
         for chat_name in json_db['chats'].keys():
             if username in json_db['chats'][chat_name]['chat_participants']:
+                current_time_dict = get_current_time()
+                current_hour = current_time_dict['hour']
+                current_minutes = current_time_dict['minutes']
+                string_current_time = str(current_hour) + ":" + str(current_minutes)
+
                 dict_chats[chat_name] = {'chat_participants': json_db['chats'][chat_name]['chat_participants'],
                                          'chat_type': json_db['chats'][chat_name]['chat_type'],
-                                         'sender_username': username}
+                                         'sender_username': username,
+                                         'time': string_current_time}
 
         bytes_dict_chats = json.dumps(dict_chats).encode()
         self.sender_socket.send(bytes_dict_chats)
+
+
+def get_current_time():
+    current_time = datetime.datetime.now()
+    current_time_dict = {'hour': current_time.hour,
+                         'minutes': current_time.minute}
+    return current_time_dict

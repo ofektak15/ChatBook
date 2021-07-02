@@ -14,7 +14,6 @@ function validate_registration_form() {
     var StrongPassword = document.forms["registration_form"]["Password"].value; // סיסמה חזקה
     var confirmPassword = document.forms["registration_form"]["confirmPassword"].value; // אימות סיסמה
     var email = document.forms["registration_form"]["Email"].value; // אימייל
-    // var response = grecaptcha.getResponse(); // האם רובוט
     var gender = document.getElementsByName("gender"); // מגדר
     var country = document.getElementById("country_select").value; // מדינה
     var age = document.forms["registration_form"]["age"].value; // גיל
@@ -439,19 +438,6 @@ function checkEmail(email) {
 
 }
 
-// בדיקת האם רובוט
-function checkRobot(response) {
-
-    // בדיקה האם המשתמש סימן את בדיקת הרובוט
-    if (response.length == 0) {
-        document.getElementById("error_robot").innerHTML = "You must fill out this field";
-        return false;
-    }
-    else {
-        document.getElementById("error_robot").innerHTML = "";
-        return true;
-    }
-}
 
 // בדיקת מגדר מסוג רדיו
 function checkRadio(gender) {

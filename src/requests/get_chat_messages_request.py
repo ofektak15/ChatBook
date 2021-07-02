@@ -20,7 +20,6 @@ class GetChatMessagesRequest(Message):
         self.chat_name = obj['chat_name']
 
     def handle(self, authenticated_sockets):
-        print("trying to handle - message")
         str_db = open('db.json', 'r').read()
         json_db = json.loads(str_db)
 

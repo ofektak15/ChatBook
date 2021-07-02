@@ -1,37 +1,5 @@
-////show on the screen a conversation title on the right side of the screen
-//eel.expose(add_conversation_to_list);
-//function add_conversation_to_list(conv)
-//{
-//    var div_section = document.getElementById("conversations");
-//    div_section.innerHTML += '<p class="friend_item" onclick="ask_to_get_conversation(this)" id="' + conv + '">' + conv + "</p>";
-//}
-//
-////show on the screen a conversation title on the right side of the screen
-//eel.expose(add_all_conversations_to_list);
-//function add_all_conversations_to_list(conv, only_names)
-//{
-//    var only_names = only_names.split("//");
-//    var chats = conv.split("//");
-//    var div_section = document.getElementById("conversations");
-//    for(var i = 0; i < chats.length; i++)
-//    {
-//        var names = chats[i].split(",");
-//        div_section.innerHTML += '<p class="friend_item" onclick="ask_to_get_conversation(this)" id="' + only_names[i] + '">' + names + "</p>";
-//    }
-//}
-//
-////send to the server a request to get specific conversation
-//function ask_to_get_conversation(elem)
-//{
-//    document.title = elem.id;
-//    eel.receive_specific_conversation(elem.id);
-//}
-
-
 async function get_chats(){
-//    alert("get_chats...");
     dict_chats = await eel.get_chats()();
-//    alert(dict_chats);
     var div_section = document.getElementById("inbox_chat");
     div_section.innerHTML = '';
     var active_chat_class = '';
@@ -69,34 +37,38 @@ async function get_chats(){
     }
 }
 async function get_chat_messages(chat_name, shown_chat_name){
-//    alert("get_chat_messages...");
     var div_section = document.getElementById("msg_history");
     div_section.innerHTML = '';
     var dict_messages = await eel.get_chat_messages(chat_name)();
     var list_chat_messages = dict_messages['list_messages'];
     var username = dict_messages['username'];
     select_active_chat(shown_chat_name);
-//    alert(list_chat_messages);
-//    alert(list_chat_messages);
-//    var div_section = document.getElementById("inbox_chat");
+
     var msg_content = '';
     var msg_from = '';
     for (var i = 0; i < list_chat_messages.length; i++) {
         msg_content = list_chat_messages[i]['message_content'];
+        current_time = list_chat_messages[i]['time'];
 
         msg_from = list_chat_messages[i]['from'];
         if (msg_from == username){
-            div_section.innerHTML += '<div class="outgoing_msg"><div class="sent_msg"></div><div class="sent_msg"><div class="sent_withd_msg"><p>' + msg_content + '</p><span class="time_date"> 11:01 AM    |    June 9</span></div></div></div>'
+            div_section.innerHTML += '<div class="outgoing_msg"><div class="sent_msg"></div><div class="sent_msg"><div class="sent_withd_msg"><p>' + msg_from + '<br>' + msg_content + '</p><span class="time_date">' + current_time + '</span></div></div></div>';
         }
         else{
-            div_section.innerHTML += '<div class="incoming_msg"><div class="incoming_msg_img"><img src="img/default_profile_icon.png" alt="profile"></div><div class="received_msg"><div class="received_withd_msg"><p>' + msg_content + '</p><span class="time_date"> 11:01 AM    |    June 9</span></div></div></div>'
+            div_section.innerHTML += '<div class="incoming_msg"><div class="incoming_msg_img"><img src="img/default_profile_icon.png" alt="profile"></div><div class="received_msg"><div class="received_withd_msg"><p>' + msg_from + '<br>' + msg_content + '</p><span class="time_date">' + current_time + '</span></div></div></div>';
         }
-//        alert("From: " + msg_from + "\nContent: " + msg_content);
+        div_section.innerHTML += '<div class="sender_name">' + msg_from + '</div>';
     }
 }
 
-async function say_hello_to_username(){
+async function get_username(){
     var username = await eel.get_username()();
+    return username;
+}
+
+
+async function say_hello_to_username(){
+    var username = get_username();
 
     var div_section = document.getElementById("text-center");
     div_section.innerHTML = "Hello " + username + "!"

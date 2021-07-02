@@ -1,7 +1,7 @@
 from src.requests.message import Message
 import json
-import time
-import hashlib
+import datetime
+import eel
 
 
 class SendMessageRequest(Message):
@@ -39,6 +39,11 @@ class SendMessageRequest(Message):
         str_db = open('db.json', 'r').read()
         json_db = json.loads(str_db)
 
+        current_time_dict = get_current_time()
+        current_hour = current_time_dict['hour']
+        current_minutes = current_time_dict['minutes']
+        string_current_time = str(current_hour) + ":" + str(current_minutes)
+
         if self.sender_socket not in authenticated_sockets.keys():
             self.sender_socket.send(b'Please login first!')
 
@@ -57,7 +62,7 @@ class SendMessageRequest(Message):
 
             json_db['chats'][self.recipients]['chat_messages'].append({'message_content': self.message_content,
                                                                        'from': self.sender_username,
-                                                                       'time': str(time.time()),
+                                                                       'time': str(string_current_time),
                                                                        'received': [self.sender_username]})
 
             for socket, username in authenticated_sockets.items():
@@ -79,7 +84,7 @@ class SendMessageRequest(Message):
 
             json_db['chats'][self.group_name]['chat_messages'].append({'message_content': self.message_content,
                                                                        'from': self.sender_username,
-                                                                       'time': str(time.time()),
+                                                                       'time': str(string_current_time),
                                                                        'received': [self.sender_username]})
 
             list_from_db = json_db['chats'][self.group_name]['chat_participants']
@@ -97,3 +102,11 @@ class SendMessageRequest(Message):
             return
 
         self.sender_socket.send(b'FAIL')
+
+
+def get_current_time():
+    current_time = datetime.datetime.now()
+    current_time_dict = {'hour': current_time.hour,
+                         'minutes': current_time.minute}
+    return current_time_dict
+
