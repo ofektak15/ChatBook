@@ -27,6 +27,7 @@ def login(username, password):
 
 @eel.expose
 def get_username():
+    print("get username - web")
     username = client.get_username()
     return username
 
@@ -44,9 +45,15 @@ def get_chat_messages(chat_name):
 
 
 @eel.expose
-def send_message(username, chatname, content, chat_type):
+def send_message(username, chat_name, content, chat_type):
     print('send_message')
-    return client.send_message(username, chatname, content, chat_type)
+    return client.send_message(username, chat_name, content, chat_type)
+
+
+@eel.expose
+def create_private_chat(chat_name, recipient):
+    print('create private chat')
+    return client.create_private_chat(chat_name, recipient)
 
 
 def main():

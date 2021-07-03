@@ -23,5 +23,5 @@ class GetUsernameRequest(Message):
             self.sender_socket.send(b'Please login first!')
 
         username = authenticated_sockets[self.sender_socket]
-
+        print(username)
         self.sender_socket.send(username.encode())

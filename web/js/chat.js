@@ -57,19 +57,13 @@ async function get_chat_messages(chat_name, shown_chat_name){
         else{
             div_section.innerHTML += '<div class="incoming_msg"><div class="incoming_msg_img"><img src="img/default_profile_icon.png" alt="profile"></div><div class="received_msg"><div class="received_withd_msg"><p>' + msg_from + '<br>' + msg_content + '</p><span class="time_date">' + current_time + '</span></div></div></div>';
         }
-        div_section.innerHTML += '<div class="sender_name">' + msg_from + '</div>';
     }
-}
-
-async function get_username(){
-    var username = await eel.get_username()();
-    return username;
 }
 
 
 async function say_hello_to_username(){
-    var username = get_username();
-
+    var username = await eel.get_username()();
+    alert(username);
     var div_section = document.getElementById("text-center");
     div_section.innerHTML = "Hello " + username + "!"
 }
@@ -101,4 +95,10 @@ async function send_message(){
     var chat_type = g_selected_active_chat_type;
     var status = await eel.send_message(username, g_selected_active_chat_real, message_content, chat_type)();
     element_input_write_msg.value = '';
+}
+
+
+async function create_private_chat(){
+    //var status = await create_private_chat("ofek,tomer", "tomer")()
+    alert("hrllo")
 }

@@ -7,6 +7,7 @@ from src.requests.get_username_request import GetUsernameRequest
 from src.requests.login_request import LoginRequest
 from src.requests.register_request import RegisterRequest
 from src.requests.send_message_request import SendMessageRequest
+from src.requests.create_private_chat import CreatePrivateChat
 
 
 class Client(object):
@@ -92,7 +93,23 @@ class Client(object):
         return dict_messages
 
     def get_username(self):
+        print("get username - client")
         request = GetUsernameRequest()
+        print("request:" + request.pack())
         self.sock.send(request.pack().encode())
         username = self.sock.recv(1024 * 1024).decode()
+        print(username)
         return username
+
+    def create_private_chat(self, chat_name, recipient):
+        request = CreatePrivateChat()
+        request.chat_name = chat_name
+        request.recipient = recipient
+        print("request: " + request.pack())
+        self.sock.send(request.pack().encode())
+        status = self.sock.recv(1024).decode()
+        print(status)
+        if status == "SUCCESS":
+            return True
+        elif status == "FAIL":
+            return False
