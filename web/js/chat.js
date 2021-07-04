@@ -99,6 +99,8 @@ async function send_message(){
 
 
 async function create_private_chat(){
-    //var status = await create_private_chat("ofek,tomer", "tomer")()
-    alert("hrllo")
+    var recipient = document.getElementById("private_chat").value;
+    alert(recipient);
+    var status = await create_private_chat(recipient)();
+    alert(status);
 }

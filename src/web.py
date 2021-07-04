@@ -51,9 +51,9 @@ def send_message(username, chat_name, content, chat_type):
 
 
 @eel.expose
-def create_private_chat(chat_name, recipient):
+def create_private_chat(recipient):
     print('create private chat')
-    return client.create_private_chat(chat_name, recipient)
+    return client.create_private_chat(recipient)
 
 
 def main():

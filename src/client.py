@@ -101,9 +101,8 @@ class Client(object):
         print(username)
         return username
 
-    def create_private_chat(self, chat_name, recipient):
-        request = CreatePrivateChat()
-        request.chat_name = chat_name
+    def create_private_chat(self, recipient):
+        request = CreatePrivateChat(recipient)
         request.recipient = recipient
         print("request: " + request.pack())
         self.sock.send(request.pack().encode())
