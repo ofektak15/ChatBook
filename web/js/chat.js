@@ -66,7 +66,6 @@ async function get_chat_messages(chat_name, shown_chat_name){
 
 async function say_hello_to_username(){
     var username = await eel.get_username()();
-    alert(username);
     var div_section = document.getElementById("text-center");
     div_section.innerHTML = "Hello " + username + "!"
 }
@@ -114,16 +113,11 @@ async function create_chat(){
 }
 
 async function create_private_chat(recipient){
-    alert('private');
-    alert(recipient);
     var status = await eel.create_private_chat(recipient)();
 }
 
 
 async function create_group_chat(recipient, group_name){
-    alert('group');
-    alert(recipient);
-    alert(group_name);
     var status = await eel.create_group_chat(recipient, group_name)();
 }
 

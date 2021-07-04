@@ -17,6 +17,10 @@
 <body>
 <script>
     get_chats(); window.setInterval(function() {get_chats(); get_chat_messages(g_selected_active_chat_real, g_selected_active_chat_shown);}, 1000)
+
+
+
+
 </script>
 <!--<script>get_chat_messages(g_selected_active_chat_real, g_selected_active_chat_shown); window.setInterval(function() {get_chat_messages(g_selected_active_chat_real, g_selected_active_chat_shown);}, 10000)</script>-->
 
@@ -33,16 +37,15 @@
                     </div>
                     <div class="srch_bar">
                         <div class="stylish-input-group">
-                            <input type="text" class="search-bar" placeholder="Search">
+                            <input type="text" onkeyup="check_create_group(this.value);"
+                                   placeholder="Enter username/s"
+                                   id="input_create_chat_name"/>
                             <span class="input-group-addon">
-                <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
-                <input type="text" onkeyup="check_create_group(this.value);" placeholder="Enter username"
-                       id="input_create_chat_name"/>
-                                <!--<input type="text" onkeyup="check_create_group(this.value);" id="lastName" name="lastName" placeholder="Last Name... (Required)" />-->
+                                <button type="button" onclick="create_chat()"> <i class="fa fa-plus-circle"
+                                                                                  aria-hidden="true"></i> </button>
+                            <div id="create_chat_group_name"></div>
 
-                <button type="button" onclick="create_chat()">press this button</button>
                 </span></div>
-                        <div id="create_chat_group_name"></div>
                     </div>
                 </div>
                 <div class="inbox_chat" id="inbox_chat">
