@@ -73,6 +73,7 @@ async function say_hello_to_username(){
 var g_selected_active_chat_shown = '';
 var g_selected_active_chat_real = '';
 var g_selected_active_chat_type = '';
+var input_create_chat_name = document.getElementById("input_create_chat_name").value;
 
 function select_active_chat(shown_chat_name){
     g_selected_active_chat_shown = shown_chat_name;
@@ -101,14 +102,27 @@ async function send_message(){
 
 
 async function create_chat(){
-    var input_create_chat_name = document.getElementById("input_create_chat_name").value;
     var group_name_div = document.getElementById("create_chat_group_name");
-    if (group_name_div.getElementsByTagName('input').length == 0){
-        create_private_chat(input_create_chat_name);
+    var input_create_chat_name = document.getElementById("input_create_chat_name").value;
+    if (input_create_chat_name == ""){
+        document.getElementById("error_usernames").innerHTML = "You must enter username/s!";
+        return;
     }
     else{
-        var group_name = group_name_div.getElementsByTagName('input')[0].value;
-        create_group_chat(input_create_chat_name, group_name);
+        document.getElementById("error_usernames").innerHTML = "";
+        if (group_name_div.getElementsByTagName('input').length == 0){
+            create_private_chat(input_create_chat_name);
+        }
+        else{
+            var group_name = group_name_div.getElementsByTagName('input');
+            alert(group_name);
+            if (group_name == ""){
+                document.getElementById("error_group_name").innerHTML = "You must enter group name!";
+                return;
+            }
+            document.getElementById("error_group_name").innerHTML = "";
+            create_group_chat(input_create_chat_name, group_name);
+        }
     }
 }
 
@@ -121,9 +135,11 @@ async function create_group_chat(recipient, group_name){
     var status = await eel.create_group_chat(recipient, group_name)();
 }
 
-function check_create_group(username){
+function check_create_group(){
+    var input_create_chat_name = document.getElementById("input_create_chat_name").value;
+
     var group_name_div = document.getElementById("create_chat_group_name");
-    if (username.indexOf(",") != -1){
+    if (input_create_chat_name.indexOf(",") != -1){
         group_name_div.innerHTML = '<input type="text" placeholder="Enter group_name"/>'
     }
     else{

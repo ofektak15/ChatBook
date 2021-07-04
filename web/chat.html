@@ -18,11 +18,7 @@
 <script>
     get_chats(); window.setInterval(function() {get_chats(); get_chat_messages(g_selected_active_chat_real, g_selected_active_chat_shown);}, 1000)
 
-
-
-
 </script>
-<!--<script>get_chat_messages(g_selected_active_chat_real, g_selected_active_chat_shown); window.setInterval(function() {get_chat_messages(g_selected_active_chat_real, g_selected_active_chat_shown);}, 10000)</script>-->
 
 <!--get_chat_messages-->
 <div class="container">
@@ -35,15 +31,18 @@
                     <div class="recent_heading">
                         <h4>Recent Chats</h4>
                     </div>
+
                     <div class="srch_bar">
                         <div class="stylish-input-group">
                             <input type="text" onkeyup="check_create_group(this.value);"
                                    placeholder="Enter username/s"
                                    id="input_create_chat_name"/>
                             <span class="input-group-addon">
-                                <button type="button" onclick="create_chat()"> <i class="fa fa-plus-circle"
-                                                                                  aria-hidden="true"></i> </button>
-                            <div id="create_chat_group_name"></div>
+                            <button type="button" onclick="create_chat()"> <i class="fa fa-plus-circle"
+                                                                              aria-hidden="true"></i> </button>
+                             <div id="create_chat_group_name"></div>
+                            <div id="error_usernames" style="color: red"></div>
+                            <div id="error_group_name" style="color: red"></div>
 
                 </span></div>
                     </div>
