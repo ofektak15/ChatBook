@@ -37,6 +37,9 @@ async function get_chats(){
     }
 }
 async function get_chat_messages(chat_name, shown_chat_name){
+    if (chat_name == '' || shown_chat_name == ''){
+        return;
+    }
     var div_section = document.getElementById("msg_history");
     div_section.innerHTML = '';
     var dict_messages = await eel.get_chat_messages(chat_name)();
@@ -98,9 +101,26 @@ async function send_message(){
 }
 
 
+async function create_chat(){
+    var recipient = document.getElementById("create_chat_name").value;
+
+    if ',' in name:
+        create_group_chat
+    else
+        create_private_chat
+}
+
 async function create_private_chat(){
+    var recipient = document.getElementById("create_chat_name").value;
+    alert(recipient);
+    var status = await eel.create_private_chat(recipient)();
+    alert(status);
+}
+
+
+async function create_group_chat(){
     var recipient = document.getElementById("private_chat").value;
     alert(recipient);
-    var status = await create_private_chat(recipient)();
+    var status = await eel.create_group_chat(recipient)();
     alert(status);
 }

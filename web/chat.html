@@ -15,7 +15,8 @@
 
 </head>
 <body>
-<script>get_chats(); window.setInterval(function() {get_chats();}, 10000)</script>
+<script>get_chats(); window.setInterval(function() {get_chats(); get_chat_messages(g_selected_active_chat_real, g_selected_active_chat_shown);}, 1000)</script>
+<!--<script>get_chat_messages(g_selected_active_chat_real, g_selected_active_chat_shown); window.setInterval(function() {get_chat_messages(g_selected_active_chat_real, g_selected_active_chat_shown);}, 10000)</script>-->
 
 <!--get_chat_messages-->
 <div class="container">
@@ -33,9 +34,9 @@
                             <input type="text" class="search-bar" placeholder="Search">
                             <span class="input-group-addon">
                 <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
-                 <input type="text" placeholder="Enter username" id="private_chat" />
+                 <input type="text" placeholder="Enter username" id="create_chat_name" />
 
-                <button type="button" onclick="create_private_chat()">press this button</button>
+                <button type="button" onclick="create_chat()">press this button</button>
                 </span></div>
                     </div>
                 </div>

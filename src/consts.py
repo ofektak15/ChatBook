@@ -1,3 +1,4 @@
+from src.requests.create_private_chat import CreatePrivateChat
 from src.requests.get_chat_messages_request import GetChatMessagesRequest
 from src.requests.get_chats_request import GetChatsRequest
 from src.requests.get_username_request import GetUsernameRequest
@@ -15,8 +16,9 @@ class Consts(object):
         'SendMessageRequest': SendMessageRequest,
         'LoginRequest': LoginRequest,
         'RegisterRequest': RegisterRequest,
-        'GetUsernameRequest': GetUsernameRequest
+        'GetUsernameRequest': GetUsernameRequest,
+        'CreatePrivateChat': CreatePrivateChat
     }
 
-    PORT = 8093
+    PORT = 8094
     HOST = '127.0.0.1'
