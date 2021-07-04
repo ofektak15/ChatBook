@@ -56,6 +56,12 @@ def create_private_chat(recipient):
     return client.create_private_chat(recipient)
 
 
+@eel.expose
+def create_group_chat(recipient, group_name):
+    print('create group chat')
+    return client.create_group_chat(recipient, group_name)
+
+
 def main():
     eel.init('web')
     rnd = random.randint(0, 1000)

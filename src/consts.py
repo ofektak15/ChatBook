@@ -1,3 +1,4 @@
+from src.requests.create_group_chat import CreateGroupChat
 from src.requests.create_private_chat import CreatePrivateChat
 from src.requests.get_chat_messages_request import GetChatMessagesRequest
 from src.requests.get_chats_request import GetChatsRequest
@@ -17,7 +18,8 @@ class Consts(object):
         'LoginRequest': LoginRequest,
         'RegisterRequest': RegisterRequest,
         'GetUsernameRequest': GetUsernameRequest,
-        'CreatePrivateChat': CreatePrivateChat
+        'CreatePrivateChat': CreatePrivateChat,
+        'CreateGroupChat': CreateGroupChat
     }
 
     PORT = 8094

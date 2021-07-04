@@ -1,6 +1,7 @@
 import json
 import socket
 from src.consts import Consts
+from src.requests.create_group_chat import CreateGroupChat
 from src.requests.get_chat_messages_request import GetChatMessagesRequest
 from src.requests.get_chats_request import GetChatsRequest
 from src.requests.get_username_request import GetUsernameRequest
@@ -104,6 +105,19 @@ class Client(object):
     def create_private_chat(self, recipient):
         request = CreatePrivateChat()
         request.recipient = recipient
+        print("request: " + request.pack())
+        self.sock.send(request.pack().encode())
+        status = self.sock.recv(1024).decode()
+        print(status)
+        if status == "SUCCESS":
+            return True
+        elif status == "FAIL":
+            return False
+
+    def create_group_chat(self, recipient, group_name):
+        request = CreateGroupChat()
+        request.recipient = recipient
+        request.group_name = group_name
         print("request: " + request.pack())
         self.sock.send(request.pack().encode())
         status = self.sock.recv(1024).decode()

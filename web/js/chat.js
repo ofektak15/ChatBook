@@ -102,25 +102,37 @@ async function send_message(){
 
 
 async function create_chat(){
-    var recipient = document.getElementById("create_chat_name").value;
-
-    if ',' in name:
-        create_group_chat
-    else
-        create_private_chat
+    var input_create_chat_name = document.getElementById("input_create_chat_name").value;
+    var group_name_div = document.getElementById("create_chat_group_name");
+    if (group_name_div.getElementsByTagName('input').length == 0){
+        create_private_chat(input_create_chat_name);
+    }
+    else{
+        var group_name = group_name_div.getElementsByTagName('input')[0].value;
+        create_group_chat(input_create_chat_name, group_name);
+    }
 }
 
-async function create_private_chat(){
-    var recipient = document.getElementById("create_chat_name").value;
+async function create_private_chat(recipient){
+    alert('private');
     alert(recipient);
     var status = await eel.create_private_chat(recipient)();
-    alert(status);
 }
 
 
-async function create_group_chat(){
-    var recipient = document.getElementById("private_chat").value;
+async function create_group_chat(recipient, group_name){
+    alert('group');
     alert(recipient);
-    var status = await eel.create_group_chat(recipient)();
-    alert(status);
+    alert(group_name);
+    var status = await eel.create_group_chat(recipient, group_name)();
+}
+
+function check_create_group(username){
+    var group_name_div = document.getElementById("create_chat_group_name");
+    if (username.indexOf(",") != -1){
+        group_name_div.innerHTML = '<input type="text" placeholder="Enter group_name"/>'
+    }
+    else{
+        group_name_div.innerHTML = "";
+    }
 }
