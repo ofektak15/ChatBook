@@ -9,6 +9,7 @@ from src.requests.login_request import LoginRequest
 from src.requests.register_request import RegisterRequest
 from src.requests.send_message_request import SendMessageRequest
 from src.requests.create_private_chat import CreatePrivateChat
+from src.requests.logout_request import LogoutRequest
 
 
 class Client(object):
@@ -36,10 +37,6 @@ class Client(object):
 
         request.username = username
         request.password = password
-
-        print('login - client')
-        print(request.username)
-        print(request.password)
 
         print("request sent to server: " + request.pack())
         self.sock.send(request.pack().encode())
@@ -77,7 +74,7 @@ class Client(object):
 
     def get_chats(self):
         request = GetChatsRequest()
-
+        print(request.pack())
         self.sock.send(request.pack().encode())
         bytes_dict_chats = self.sock.recv(1024 * 1024).decode()
         print('get_chats: ' + bytes_dict_chats)
@@ -101,6 +98,12 @@ class Client(object):
         username = self.sock.recv(1024 * 1024).decode()
         print(username)
         return username
+
+    def log_out(self, username):
+        request = LogoutRequest()
+        request.username = username
+        print("request:" + request.pack())
+        self.sock.send(request.pack().encode())
 
     def create_private_chat(self, recipient):
         request = CreatePrivateChat()
@@ -126,3 +129,4 @@ class Client(object):
             return True
         elif status == "FAIL":
             return False
+

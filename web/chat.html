@@ -8,7 +8,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css"
           rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/chat_style.css"/>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script type="text/javascript" src="../eel.js"></script>
     <script src="js/chat.js"></script>
 
@@ -17,13 +17,12 @@
 <body>
 <script>
     get_chats(); window.setInterval(function() {get_chats(); get_chat_messages(g_selected_active_chat_real, g_selected_active_chat_shown);}, 1000)
-
 </script>
 
 <!--get_chat_messages-->
 <div class="container">
-    <h3 class="text-center" id="text-center"></h3>
     <script>say_hello_to_username();</script>
+    <div id="say-hello"></div>
     <div class="messaging">
         <div class="inbox_msg">
             <div class="inbox_people">
@@ -31,16 +30,15 @@
                     <div class="recent_heading">
                         <h4>Recent Chats</h4>
                     </div>
+                    <button type="button" id="log-out" onclick="log_out()"> <i class="fa fa-sign-out"></i></button>
 
                     <div class="srch_bar">
                         <div class="stylish-input-group">
-                            <input type="text" onkeyup="check_create_group(this.value);"
-                                   placeholder="Enter username/s"
-                                   id="input_create_chat_name"/>
+                            <input id="create-chats" type="text" onkeyup="check_create_group(this.value);"
+                                   placeholder="Enter username/s">
                             <span class="input-group-addon">
-                            <button type="button" onclick="create_chat()"> <i class="fa fa-plus-circle"
-                                                                              aria-hidden="true"></i> </button>
-                             <div id="create_chat_group_name"></div>
+                            <button id="plus_icon" type="button" onclick="create_chat()"> <i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+                            <div id="create_chat_group_name"></div>
                             <div id="error_usernames" style="color: red"></div>
                             <div id="error_group_name" style="color: red"></div>
 
@@ -52,9 +50,6 @@
                         <div class="chat_people">
                             <div class="chat_img"><img src="img/default_profile_icon.png"
                                                        alt="profile"></div>
-                            <div class="chat_ib">
-                                <h5>Test</h5>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -62,45 +57,16 @@
             <div class="mesgs">
                 <div class="msg_history" id="msg_history">
                     <div class="incoming_msg">
-                        <div class="incoming_msg_img"><img src="https://ptetutorials.com/images/user-profile.png"
-                                                           alt="sunil"></div>
+                        <div class="incoming_msg_img">
                         <div class="received_msg">
                             <div class="received_withd_msg">
-                                <p>Test which is a new approach to have all
-                                    solutions</p>
                                 <span class="time_date"></span></div>
                         </div>
                     </div>
                     <div class="outgoing_msg">
                         <div class="sent_msg">
-                            <p>Test which is a new approach to have all
-                                solutions</p>
                             <span class="time_date"></span></div>
                     </div>
-                    <div class="incoming_msg">
-                        <div class="incoming_msg_img"><img src="https://ptetutorials.com/images/user-profile.png"
-                                                           alt="sunil"></div>
-                        <div class="received_msg">
-                            <div class="received_withd_msg">
-                                <p>Test, which is a new approach to have</p>
-                                <span class="time_date"></span></div>
-                        </div>
-                    </div>
-                    <div class="outgoing_msg">
-                        <div class="sent_msg">
-                            <p>Apollo University, Delhi, India Test</p>
-                            <span class="time_date"> 11:01 AM    |    Today</span></div>
-                    </div>
-                    <div class="incoming_msg">
-                        <div class="incoming_msg_img"><img src="https://ptetutorials.com/images/user-profile.png"
-                                                           alt="sunil"></div>
-                        <div class="received_msg">
-                            <div class="received_withd_msg">
-                                <p>We work directly with our designers and suppliers,
-                                    and sell direct to you, which means quality, exclusive
-                                    products, at a price anyone can afford.</p>
-                                <span class="time_date"> 11:01 AM    |    Today</span></div>
-                        </div>
                     </div>
                 </div>
                 <div class="type_msg">

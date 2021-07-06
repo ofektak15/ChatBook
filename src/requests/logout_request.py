@@ -1,7 +1,5 @@
 from src.requests.message import Message
 import json
-import time
-import hashlib
 
 
 class LogoutRequest(Message):
@@ -9,7 +7,6 @@ class LogoutRequest(Message):
         # TODO: init the parent
         self.command_id = 'LogoutRequest'
         self.username = None
-        self.password = None
 
     def pack(self):
         obj = {'command_id': self.command_id, 'username': self.username}
@@ -25,15 +22,16 @@ class LogoutRequest(Message):
         json_db = json.loads(str_db)
 
         if self.sender_socket not in authenticated_sockets.keys():
-            self.sender_socket.send('Please login first!')
+            self.sender_socket.send(b'Please login first!')
 
         if self.username != authenticated_sockets[self.sender_socket]:
-            self.sender_socket.send('Wrong username!')
+            self.sender_socket.send(b'Wrong username!')
 
         if self.username in json_db['users'].keys():
             json_db['users'][self.username]['is_connected'] = False
             str_modified_db = json.dumps(json_db)
             open('db.json', 'w').write(str_modified_db)
+
             self.sender_socket.send(b'SUCCESS')
             return
 

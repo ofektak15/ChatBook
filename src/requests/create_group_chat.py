@@ -33,7 +33,7 @@ class CreateGroupChat(Message):
             self.sender_socket.send(b'Please login first!')
 
         username = authenticated_sockets[self.sender_socket]
-
+        print("username:" + username)
         chat_name = self.group_name
         json_db['chats'][chat_name] = {}
         json_db['chats'][chat_name]['chat_type'] = "group"

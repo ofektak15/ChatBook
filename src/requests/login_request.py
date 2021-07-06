@@ -4,7 +4,6 @@ import time
 import hashlib
 
 
-
 class LoginRequest(Message):
     def __init__(self):
         # TODO: init the parent
@@ -36,6 +35,5 @@ class LoginRequest(Message):
                     open('db.json', 'w').write(str_modified_db)
                     self.sender_socket.send(b'SUCCESS')
                     return
-        # DB
-        # SOCKET OF LOGGED USERS
+
         self.sender_socket.send(b'FAIL')

@@ -22,5 +22,5 @@ class Consts(object):
         'CreateGroupChat': CreateGroupChat
     }
 
-    PORT = 8080
+    PORT = 1020
     HOST = '127.0.0.1'

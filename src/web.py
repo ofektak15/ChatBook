@@ -41,6 +41,7 @@ def get_chats():
 @eel.expose
 def get_chat_messages(chat_name):
     print('get_chat_messages')
+    print(chat_name)
     return client.get_chat_messages(chat_name)
 
 
@@ -60,6 +61,12 @@ def create_private_chat(recipient):
 def create_group_chat(recipient, group_name):
     print('create group chat')
     return client.create_group_chat(recipient, group_name)
+
+
+@eel.expose
+def log_out(username):
+    print("logging out")
+    return client.log_out(username)
 
 
 def main():

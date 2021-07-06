@@ -13,7 +13,7 @@ async function get_chats(){
                 active_chat_class = ' active_chat';
                 g_selected_active_chat_type = chat_type;
             }
-            div_section.innerHTML += '<div class="chat_list' + active_chat_class + '"><div class="chat_people"><div class="chat_img"><img src="img/default_profile_icon.png" alt="profile"></div><div class="chat_ib"><button onclick="get_chat_messages(\'' + chat_name + '\', \'' + chat_name  + '\');">' + chat_name + '</button></div></div></div>';
+            div_section.innerHTML += '<div class="chat_list' + active_chat_class + '"><div class="chat_people"><div class="chat_img"><img src="img/default_profile_icon.png" alt="profile"></div><div class="chat_ib"><div onclick="get_chat_messages(\'' + chat_name + '\', \'' + chat_name  + '\');">' + chat_name + '</div></div></div></div>';
         }
         else if (chat_type == 'private'){
             var pair_participants = chat_name.split(',');
@@ -27,11 +27,10 @@ async function get_chats(){
                 active_chat_class = ' active_chat';
                 g_selected_active_chat_type = chat_type;
             }
-            div_section.innerHTML += '<div class="chat_list' + active_chat_class + '"><div class="chat_people"><div class="chat_img"><img src="img/default_profile_icon.png" alt="profile"></div><div class="chat_ib"><button onclick="get_chat_messages(\'' + chat_name + '\', \'' + shown_chat_name  + '\');">' + shown_chat_name + '</button></div></div></div>';
+            div_section.innerHTML += '<div class="chat_list' + active_chat_class + '"><div class="chat_people"><div class="chat_img"><img src="img/default_profile_icon.png" alt="profile"></div><div class="chat_ib"><div onclick="get_chat_messages(\'' + chat_name + '\', \'' + shown_chat_name  + '\');">' + shown_chat_name + '</div></div></div></div>';
         }
         if (active_chat_class != ''){
             g_selected_active_chat_real = chat_name;
-//            alert("g_selected_active_chat_real: " + g_selected_active_chat_real)
         }
         active_chat_class = '';
     }
@@ -55,10 +54,24 @@ async function get_chat_messages(chat_name, shown_chat_name){
 
         msg_from = list_chat_messages[i]['from'];
         if (msg_from == username){
-            div_section.innerHTML += '<div class="outgoing_msg"><div class="sent_msg"></div><div class="sent_msg"><div class="sent_withd_msg"><p>' + msg_from + '<br>' + msg_content + '</p><span class="time_date">' + current_time + '</span></div></div></div>';
+            if (chat_name.indexOf(',') != -1) // if there is not ',' - private chat
+            {
+              div_section.innerHTML += '<div class="outgoing_msg"><div class="sent_msg"></div><div class="sent_msg"><div class="sent_withd_msg"><p>' + msg_content + '</p><span class="time_date">' + current_time + '</span></div></div></div>';
+            }
+            else // if there is a ',' - group chat
+            {
+                 div_section.innerHTML += '<div class="outgoing_msg"><div class="sent_msg"></div><div class="sent_msg"><div class="sent_withd_msg"><p style="color: #ADFF2F">' + msg_from + '<br></p><p>' + msg_content + '</p><span class="time_date">' + current_time + '</span></div></div></div>';
+            }
         }
         else{
-            div_section.innerHTML += '<div class="incoming_msg"><div class="incoming_msg_img"><img src="img/default_profile_icon.png" alt="profile"></div><div class="received_msg"><div class="received_withd_msg"><p>' + msg_from + '<br>' + msg_content + '</p><span class="time_date">' + current_time + '</span></div></div></div>';
+            if (chat_name.indexOf(',') != -1) // if there is not ',' - private chat
+            {
+                 div_section.innerHTML += '<div class="incoming_msg"><div class="incoming_msg_img"><img src="img/default_profile_icon.png" alt="profile"></div><div class="received_msg"><div class="received_withd_msg"><p>' + msg_content + '</p><span class="time_date">' + current_time + '</span></div></div></div>';
+            }
+            else // if there is a ',' - group chat
+            {
+                div_section.innerHTML += '<div class="incoming_msg"><div class="incoming_msg_img"><img src="img/default_profile_icon.png" alt="profile"></div><div class="received_msg"><div class="received_withd_msg"><p style="color: #ADFF2F"><p>' + msg_from + '</p><br>' + msg_content + '</p><span class="time_date">' + current_time + '</span></div></div></div>';
+            }
         }
     }
 }
@@ -66,7 +79,7 @@ async function get_chat_messages(chat_name, shown_chat_name){
 
 async function say_hello_to_username(){
     var username = await eel.get_username()();
-    var div_section = document.getElementById("text-center");
+    var div_section = document.getElementById("say-hello");
     div_section.innerHTML = "Hello " + username + "!"
 }
 
@@ -103,11 +116,11 @@ async function send_message(){
 
 async function create_chat(){
     var group_name_div = document.getElementById("create_chat_group_name");
-    var input_create_chat_name = document.getElementById("input_create_chat_name").value;
-    if (input_create_chat_name == ""){
+    if (input_create_chat_name == null){
         document.getElementById("error_usernames").innerHTML = "You must enter username/s!";
         return;
     }
+    var input_create_chat_name = document.getElementById("create_chat_group_name").value;
     else{
         document.getElementById("error_usernames").innerHTML = "";
         if (group_name_div.getElementsByTagName('input').length == 0){
@@ -127,16 +140,16 @@ async function create_chat(){
 }
 
 async function create_private_chat(recipient){
-    var status = await eel.create_private_chat(recipient)();
+    await eel.create_private_chat(recipient)();
 }
 
 
 async function create_group_chat(recipient, group_name){
-    var status = await eel.create_group_chat(recipient, group_name)();
+    await eel.create_group_chat(recipient, group_name)();
 }
 
 function check_create_group(){
-    var input_create_chat_name = document.getElementById("input_create_chat_name").value;
+    var input_create_chat_name = document.getElementById("create-chats").value;
 
     var group_name_div = document.getElementById("create_chat_group_name");
     if (input_create_chat_name.indexOf(",") != -1){
@@ -146,3 +159,17 @@ function check_create_group(){
         group_name_div.innerHTML = "";
     }
 }
+
+
+async function log_out(){
+    var username = await eel.get_username()();
+    await eel.log_out(username)();
+    go_to("login.html")
+}
+
+eel.expose(go_to)
+function go_to(url){
+    window.location.replace(url);
+};
+
+

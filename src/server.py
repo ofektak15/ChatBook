@@ -65,6 +65,7 @@ def main():
             messages.append(message)
 
         for message in messages:
+            type(message)
             message.handle(authenticated_sockets)
 
 

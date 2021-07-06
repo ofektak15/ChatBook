@@ -1,5 +1,4 @@
-﻿// https://github.com/ChrisKnott/Eel/issues/426
-eel.expose(go_to)
+﻿eel.expose(go_to)
 function go_to(url){
     window.location.replace(url);
 };
