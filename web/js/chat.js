@@ -116,8 +116,8 @@ async function send_message(){
 
 
 async function create_chat(){
-    var group_name_div = document.getElementById("create_chats");
-    var div_input_create_chat_name = document.getElementById("create_chats")
+    var group_name_div = document.getElementById("create_chat_group_name");
+    var div_input_create_chat_name = document.getElementById("create-chats");
 
     if (div_input_create_chat_name.innerText == ""){
         document.getElementById("error_usernames").innerHTML = "You must enter username/s!";
