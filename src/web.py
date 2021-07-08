@@ -71,7 +71,7 @@ def log_out(username):
 
 def main():
     eel.init('web')
-    rnd = random.randint(0, 1000)
+    rnd = random.randint(0, 3000)
     print('using port: {}'.format(8080 + rnd))
     eel.start('login.html', disable_cache=True, size=(400, 675), port=8080 + rnd)
 
