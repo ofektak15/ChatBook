@@ -119,7 +119,7 @@ async function create_chat(){
     var group_name_div = document.getElementById("create_chat_group_name");
     var div_input_create_chat_name = document.getElementById("create-chats");
 
-    if (div_input_create_chat_name.innerText == ""){
+    if (div_input_create_chat_name.value == ""){
         document.getElementById("error_usernames").innerHTML = "You must enter username/s!";
         return;
     }
@@ -130,8 +130,11 @@ async function create_chat(){
             create_private_chat(g_input_create_chat_name);
         }
         else{
-            var group_name = group_name_div.getElementsByTagName('input');
-            alert(group_name);
+            var group_name = '';
+            if (group_name_div.getElementsByTagName('input').length >= 1 ){
+                group_name = group_name_div.getElementsByTagName('input')[0].value;
+                alert(group_name);
+            }
             if (group_name == ""){
                 document.getElementById("error_group_name").innerHTML = "You must enter group name!";
                 return;
