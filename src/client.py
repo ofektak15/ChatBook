@@ -4,6 +4,7 @@ from src.consts import Consts
 from src.requests.create_group_chat import CreateGroupChat
 from src.requests.get_chat_messages_request import GetChatMessagesRequest
 from src.requests.get_chats_request import GetChatsRequest
+from src.requests.get_is_connected import GetIsConnected
 from src.requests.get_username_request import GetUsernameRequest
 from src.requests.login_request import LoginRequest
 from src.requests.register_request import RegisterRequest
@@ -48,7 +49,7 @@ class Client(object):
 
     def send_message(self, username, recipient, content, chat_type):
         request = SendMessageRequest()
-
+        print("send message request: " + request.pack())
         request.sender_username = username
         request.recipients = recipient
         request.group_name = recipient
@@ -91,12 +92,9 @@ class Client(object):
         return dict_messages
 
     def get_username(self):
-        print("get username - client")
         request = GetUsernameRequest()
-        print("request:" + request.pack())
         self.sock.send(request.pack().encode())
         username = self.sock.recv(1024 * 1024).decode()
-        print(username)
         return username
 
     def log_out(self, username):
@@ -129,4 +127,14 @@ class Client(object):
             return True
         elif status == "FAIL":
             return False
+
+    def get_is_connected(self, username):
+        request = GetIsConnected()
+        request.username = username
+        print("request: " + request.pack())
+        self.sock.send(request.pack().encode())
+        status = self.sock.recv(1024).decode()
+        print(status)
+        return status
+
 

@@ -2,6 +2,7 @@ from src.requests.create_group_chat import CreateGroupChat
 from src.requests.create_private_chat import CreatePrivateChat
 from src.requests.get_chat_messages_request import GetChatMessagesRequest
 from src.requests.get_chats_request import GetChatsRequest
+from src.requests.get_is_connected import GetIsConnected
 from src.requests.get_username_request import GetUsernameRequest
 from src.requests.login_request import LoginRequest
 from src.requests.logout_request import LogoutRequest
@@ -19,7 +20,8 @@ class Consts(object):
         'RegisterRequest': RegisterRequest,
         'GetUsernameRequest': GetUsernameRequest,
         'CreatePrivateChat': CreatePrivateChat,
-        'CreateGroupChat': CreateGroupChat
+        'CreateGroupChat': CreateGroupChat,
+        'GetIsConnected': GetIsConnected
     }
 
     PORT = 8082

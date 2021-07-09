@@ -36,6 +36,7 @@ class SendMessageRequest(Message):
         self.message_content = obj['message_content']
 
     def handle(self, authenticated_sockets):
+        print("trying to handle sending message")
         str_db = open('db.json', 'r').read()
         json_db = json.loads(str_db)
 
@@ -67,7 +68,6 @@ class SendMessageRequest(Message):
 
             for socket, username in authenticated_sockets.items():
                 if username == recipient_username:
-                    # socket.send(self.pack().encode())
                     json_db['chats'][self.recipients]['chat_messages'][-1]['received'].append(username)
 
             str_modified_db = json.dumps(json_db)

@@ -69,6 +69,11 @@ def log_out(username):
     return client.log_out(username)
 
 
+@eel.expose
+def get_is_connected(username):
+    return client.get_is_connected(username)
+
+
 def main():
     eel.init('web')
     rnd = random.randint(0, 3000)

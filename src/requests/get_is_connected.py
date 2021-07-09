@@ -4,9 +4,9 @@ import time
 import hashlib
 
 
-class GetUsernameRequest(Message):
+class GetIsConnected(Message):
     def __init__(self):
-        self.command_id = 'GetUsernameRequest'
+        self.command_id = 'GetIsConnected'
         self.username = None
 
     def pack(self):
@@ -19,6 +19,12 @@ class GetUsernameRequest(Message):
         self.username = obj['username']
 
     def handle(self, authenticated_sockets):
+        str_db = open('db.json', 'r').read()
+        json_db = json.loads(str_db)
+
+        if json_db['users'][self.username]['is_connected']:
+            return True
+
         if self.sender_socket not in authenticated_sockets.keys():
             self.sender_socket.send(b'Please login first!')
 

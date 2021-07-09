@@ -36,9 +36,10 @@ async function get_chats(){
     }
 }
 async function get_chat_messages(chat_name, shown_chat_name){
-    if (chat_name == '' || shown_chat_name == ''){
+    if (chat_name == '' && shown_chat_name == ''){
         return;
     }
+    document.getElementById("name_of_chat").innerHTML = shown_chat_name;
     var div_section = document.getElementById("msg_history");
     div_section.innerHTML = '';
     var dict_messages = await eel.get_chat_messages(chat_name)();
@@ -51,16 +52,28 @@ async function get_chat_messages(chat_name, shown_chat_name){
     for (var i = 0; i < list_chat_messages.length; i++) {
         msg_content = list_chat_messages[i]['message_content'];
         current_time = list_chat_messages[i]['time'];
-
         msg_from = list_chat_messages[i]['from'];
+
+        if(chat_name.indexOf(',') != -1) // private chat
+        {
+            if (get_is_connected(shown_chat_name)) // if the recipient is connected
+            {
+                document.getElementById("is_connected").innerText = "connected";
+            }
+            else // if the recipient is not connected
+            {
+                document.getElementById("is_connected").innerText = "disconnected";
+            }
+        }
+
         if (msg_from == username){
             if (chat_name.indexOf(',') != -1) // if there is not ',' - private chat
             {
-              div_section.innerHTML += '<div class="outgoing_msg"><div class="sent_msg"></div><div class="sent_msg"><div class="sent_withd_msg"><p>' + msg_content + '</p><span class="time_date">' + current_time + '</span></div></div></div>';
+                div_section.innerHTML += '<div class="outgoing_msg"><div class="sent_msg"></div><div class="sent_msg"><div class="sent_withd_msg"><p>' + msg_content + '</p><span class="time_date">' + current_time + '</span></div></div></div>';
             }
             else // if there is a ',' - group chat
             {
-                 div_section.innerHTML += '<div class="outgoing_msg"><div class="sent_msg"></div><div class="sent_msg"><div class="sent_withd_msg"><p style="color: #ADFF2F">' + msg_from + '<br></p><p>' + msg_content + '</p><span class="time_date">' + current_time + '</span></div></div></div>';
+                div_section.innerHTML += '<div class="outgoing_msg"><div class="sent_msg"></div><div class="sent_msg"><div class="sent_withd_msg"><p style="color: #ADFF2F">' + msg_from + '<br></p><p>' + msg_content + '</p><span class="time_date">' + current_time + '</span></div></div></div>';
             }
         }
         else{
@@ -87,7 +100,6 @@ var g_selected_active_chat_shown = '';
 var g_selected_active_chat_real = '';
 var g_selected_active_chat_type = '';
 var g_input_create_chat_name = '';
-// document.getElementById("input_create_chat_name").value;
 
 function select_active_chat(shown_chat_name){
     g_selected_active_chat_shown = shown_chat_name;
@@ -163,12 +175,19 @@ function check_create_group(){
 
     var group_name_div = document.getElementById("create_chat_group_name");
     if (g_input_create_chat_name.indexOf(",") != -1){
-        group_name_div.innerHTML = '<input type="text" placeholder="Enter group_name"/>'
+        group_name_div.innerHTML = '<input type="text" placeholder="Enter group_name"/>';
     }
     else{
         group_name_div.innerHTML = "";
+        document.getElementById("error_group_name").innerHTML = "";
     }
 }
+
+async function get_is_connected(username){
+    is_connected = await eel.get_is_connected(username)();
+    return is_connected;
+}
+
 
 
 async function log_out(){
