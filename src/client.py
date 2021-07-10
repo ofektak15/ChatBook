@@ -5,6 +5,7 @@ from src.requests.create_group_chat import CreateGroupChat
 from src.requests.get_chat_messages_request import GetChatMessagesRequest
 from src.requests.get_chats_request import GetChatsRequest
 from src.requests.get_is_connected import GetIsConnected
+from src.requests.get_is_update import GetIsUpdate
 from src.requests.get_username_request import GetUsernameRequest
 from src.requests.login_request import LoginRequest
 from src.requests.register_request import RegisterRequest
@@ -49,12 +50,12 @@ class Client(object):
 
     def send_message(self, username, recipient, content, chat_type):
         request = SendMessageRequest()
-        print("send message request: " + request.pack())
         request.sender_username = username
         request.recipients = recipient
         request.group_name = recipient
         request.type_of_message = chat_type
         request.message_content = content
+        print("send message request: " + request.pack())
 
         self.sock.send(request.pack().encode())
         status = self.sock.recv(1024 * 1024).decode()
@@ -138,4 +139,12 @@ class Client(object):
         print(status)
         return status
 
-
+    def get_is_update(self):
+        request = GetIsUpdate()
+        print("request: " + request.pack())
+        self.sock.send(request.pack().encode())
+        str_dict_is_update = self.sock.recv(1024).decode()
+        dict_is_update = json.loads(str_dict_is_update)
+        status = dict_is_update['is_update']
+        print(status)
+        return status

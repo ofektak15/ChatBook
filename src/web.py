@@ -75,6 +75,12 @@ def get_is_connected(username):
     return client.get_is_connected(username)
 
 
+@eel.expose
+def get_is_update():
+    print('get_is_update')
+    return client.get_is_update()
+
+
 def main():
     eel.init('web')
     rnd = random.randint(0, 3000)

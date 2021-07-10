@@ -40,6 +40,9 @@ class CreateGroupChat(Message):
         json_db['chats'][chat_name]['chat_participants'] = recipients + [username]
         json_db['chats'][chat_name]['chat_messages'] = []
 
+        for recipient in json_db['chats'][chat_name]['chat_participants']:
+            json_db['users'][recipient]['is_update'] = True
+
         str_modified_db = json.dumps(json_db)
         open('db.json', 'w').write(str_modified_db)
 

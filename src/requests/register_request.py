@@ -32,6 +32,7 @@ class RegisterRequest(Message):
         hashed_password = hashlib.md5(self.password.encode()).hexdigest()
         json_db['users'][self.username]['password'] = hashed_password
         json_db['users'][self.username]['is_connected'] = False
+        json_db['users'][self.username]['is_update'] = False
         str_modified_db = json.dumps(json_db)
         open('db.json', 'w').write(str_modified_db)
 

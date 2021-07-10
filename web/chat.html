@@ -17,7 +17,16 @@
 </head>
 <body>
 <script>
-    get_chats(); window.setInterval(function() {get_chats(); get_chat_messages(g_selected_active_chat_real, g_selected_active_chat_shown);}, 1000)
+    get_chats();
+    window.setInterval(async function() {
+        var status_is_update = await get_is_update();
+        if (status_is_update){
+            get_chats();
+            get_chat_messages(g_selected_active_chat_real, g_selected_active_chat_shown);
+        }
+        else{
+        }
+    }, 3000)
 </script>
 
 <!--get_chat_messages-->

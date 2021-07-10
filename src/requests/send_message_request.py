@@ -52,6 +52,7 @@ class SendMessageRequest(Message):
             self.sender_socket.send(b'Wrong username!')
 
         if self.type_of_message == 'private':
+
             recipients = self.recipients.split(',')  # ['ofek', 'tomer']
             recipients.remove(self.sender_username)
             recipient_username = recipients[0]
@@ -60,6 +61,9 @@ class SendMessageRequest(Message):
                 json_db['chats'][self.recipients]['chat_type'] = 'private'
                 json_db['chats'][self.recipients]['chat_messages'] = []
                 json_db['chats'][self.recipients]['chat_participants'] = self.recipients.split(',')
+
+            for recipient in json_db['chats'][self.recipients]['chat_participants']:
+                json_db['users'][recipient]['is_update'] = True
 
             json_db['chats'][self.recipients]['chat_messages'].append({'message_content': self.message_content,
                                                                        'from': self.sender_username,
@@ -88,6 +92,9 @@ class SendMessageRequest(Message):
                                                                        'received': [self.sender_username]})
 
             list_from_db = json_db['chats'][self.group_name]['chat_participants']
+            for recipient in list_from_db:
+                json_db['users'][recipient]['is_update'] = True
+
             true_recipients = list(list_from_db)
             true_recipients.remove(self.sender_username)
 
@@ -109,4 +116,3 @@ def get_current_time():
     current_time_dict = {'hour': current_time.hour,
                          'minutes': current_time.minute}
     return current_time_dict
-

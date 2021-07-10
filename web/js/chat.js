@@ -36,6 +36,13 @@ async function get_chats(){
     }
 }
 async function get_chat_messages(chat_name, shown_chat_name){
+    g_selected_active_chat_real = chat_name;
+    if (g_selected_active_chat_real.indexOf(',') != -1){
+        g_selected_active_chat_type = "private";
+    }
+    else{
+        g_selected_active_chat_type = "group";
+    }
     if (chat_name == '' && shown_chat_name == ''){
         return;
     }
@@ -194,6 +201,12 @@ async function log_out(){
     var username = await eel.get_username()();
     await eel.log_out(username)();
     go_to("login.html")
+}
+
+
+async function get_is_update(){
+    var is_update = await eel.get_is_update()();
+    return is_update;
 }
 
 eel.expose(go_to)
