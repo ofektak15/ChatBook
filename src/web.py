@@ -71,6 +71,7 @@ def log_out(username):
 
 @eel.expose
 def get_is_connected(username):
+    print('get_is_connected')
     return client.get_is_connected(username)
 
 

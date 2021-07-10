@@ -22,7 +22,13 @@ class GetIsConnected(Message):
         str_db = open('db.json', 'r').read()
         json_db = json.loads(str_db)
 
-        if json_db['users'][self.username]['is_connected']:
-            return True
-        else:
-            return False
+        if self.sender_socket not in authenticated_sockets.keys():
+            self.sender_socket.send(b'Please login first!')
+
+        is_connected = False
+        if json_db['users'][self.username]:
+            is_connected = json_db['users'][self.username]['is_connected']
+
+        dict_messages = {'is_connected': is_connected}
+        bytes_dict_messages = json.dumps(dict_messages).encode()
+        self.sender_socket.send(bytes_dict_messages)

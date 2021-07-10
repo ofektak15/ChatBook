@@ -42,7 +42,8 @@ async function get_chat_messages(chat_name, shown_chat_name){
 
     if(chat_name.indexOf(',') != -1) // private chat
     {
-        if (get_is_connected(shown_chat_name)) // if the recipient is connected
+        var is_connected = await get_is_connected(shown_chat_name);
+        if (is_connected) // if the recipient is connected
         {
             document.getElementById("is_connected").innerText = "connected";
         }

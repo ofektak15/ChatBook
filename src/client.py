@@ -133,7 +133,9 @@ class Client(object):
         request.username = username
         print("request: " + request.pack())
         self.sock.send(request.pack().encode())
-        status = self.sock.recv(1024).decode()
+        str_dict_is_connected = self.sock.recv(1024).decode()
+        dict_is_connected = json.loads(str_dict_is_connected)
+        status = dict_is_connected['is_connected']
         print(status)
         return status
 
