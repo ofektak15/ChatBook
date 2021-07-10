@@ -102,7 +102,7 @@ async function get_chat_messages(chat_name, shown_chat_name){
             else // if there is a ',' - group chat
             {
                 document.getElementById("is_connected").innerText = "";
-                div_section.innerHTML += '<div class="incoming_msg"><div class="incoming_msg_img"><img src="img/default_profile_icon.png" alt="profile"></div><div class="received_msg"><div class="received_withd_msg"><p style="color: #ADFF2F"><p>' + msg_from + '</p><br>' + msg_content + '</p><span class="time_date">' + current_time + '</span></div></div></div>';
+                div_section.innerHTML += '<div class="incoming_msg"><div class="incoming_msg_img"><img src="img/default_profile_icon.png" alt="profile"></div><div class="received_msg"><div class="received_withd_msg"><p style="color: red"">' + msg_from + '<br><p>' + msg_content + '</p></p><span class="time_date">' + current_time + '</span></div></div></div>';
             }
         }
     }
