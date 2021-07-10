@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script type="text/javascript" src="../eel.js"></script>
     <script src="js/chat.js"></script>
+    <script src="js/current_time.js"></script>
 
 
 </head>
@@ -30,6 +31,8 @@
 
                     <div class="recent_heading">
                         <h4>Recent Chats</h4>
+                        <div id="current_time"></div>
+                        <script>startTime()</script>
                     </div>
                     <button type="button" id="log-out" onclick="log_out()"> <i class="fa fa-sign-out"></i></button>
                     <div class="srch_bar">

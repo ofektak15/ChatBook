@@ -150,6 +150,7 @@ img{ max-width:100%;}
 #say-hello{
   text-align: center;
   font-size: 50px;
+  font-family: 'Eras ITC';
 }
 
 #log-out{
@@ -176,6 +177,7 @@ img{ max-width:100%;}
     overflow:hidden;
     border-bottom: 1px solid #c4c4c4;
     width: 1000px;
+    font-family: 'Eras ITC';
 }
 
 #name_of_chat{
@@ -189,11 +191,13 @@ img{ max-width:100%;}
     margin-right: 350px;
 }
 
-
-
-
-
-
-
+#current_time{
+    left: 23%;
+    position: absolute;
+    top: 2%;
+    font-size: 180%;
+    font-family: 'Eras ITC';
+    font-weight:900;
+}
 
 

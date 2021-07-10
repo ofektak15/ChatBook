@@ -24,9 +24,5 @@ class GetIsConnected(Message):
 
         if json_db['users'][self.username]['is_connected']:
             return True
-
-        if self.sender_socket not in authenticated_sockets.keys():
-            self.sender_socket.send(b'Please login first!')
-
-        username = authenticated_sockets[self.sender_socket]
-        self.sender_socket.send(username.encode())
+        else:
+            return False

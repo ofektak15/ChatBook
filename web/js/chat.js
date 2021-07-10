@@ -39,6 +39,18 @@ async function get_chat_messages(chat_name, shown_chat_name){
     if (chat_name == '' && shown_chat_name == ''){
         return;
     }
+
+    if(chat_name.indexOf(',') != -1) // private chat
+    {
+        if (get_is_connected(shown_chat_name)) // if the recipient is connected
+        {
+            document.getElementById("is_connected").innerText = "connected";
+        }
+        else // if the recipient is not connected
+        {
+            document.getElementById("is_connected").innerText = "disconnected";
+        }
+    }
     document.getElementById("name_of_chat").innerHTML = shown_chat_name;
     var div_section = document.getElementById("msg_history");
     div_section.innerHTML = '';
@@ -53,18 +65,6 @@ async function get_chat_messages(chat_name, shown_chat_name){
         msg_content = list_chat_messages[i]['message_content'];
         current_time = list_chat_messages[i]['time'];
         msg_from = list_chat_messages[i]['from'];
-
-        if(chat_name.indexOf(',') != -1) // private chat
-        {
-            if (get_is_connected(shown_chat_name)) // if the recipient is connected
-            {
-                document.getElementById("is_connected").innerText = "connected";
-            }
-            else // if the recipient is not connected
-            {
-                document.getElementById("is_connected").innerText = "disconnected";
-            }
-        }
 
         if (msg_from == username){
             if (chat_name.indexOf(',') != -1) // if there is not ',' - private chat
@@ -145,7 +145,6 @@ async function create_chat(){
             var group_name = '';
             if (group_name_div.getElementsByTagName('input').length >= 1 ){
                 group_name = group_name_div.getElementsByTagName('input')[0].value;
-                alert(group_name);
             }
             if (group_name == ""){
                 document.getElementById("error_group_name").innerHTML = "You must enter group name!";
