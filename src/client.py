@@ -65,7 +65,6 @@ class Client(object):
     def handle_recv(self):
         data = self.sock.recv(1024 * 1024).decode()
 
-        # TODO: Handle server closed
         if data:  # if len(data) != 0
             message = SendMessageRequest()
             message.unpack(data)

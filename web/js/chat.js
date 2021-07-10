@@ -199,6 +199,6 @@ async function log_out(){
 eel.expose(go_to)
 function go_to(url){
     window.location.replace(url);
-};
+}
 
 

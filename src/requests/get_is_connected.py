@@ -21,7 +21,6 @@ class GetIsConnected(Message):
     def handle(self, authenticated_sockets):
         str_db = open('db.json', 'r').read()
         json_db = json.loads(str_db)
-
         if self.sender_socket not in authenticated_sockets.keys():
             self.sender_socket.send(b'Please login first!')
 
