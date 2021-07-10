@@ -27,7 +27,16 @@ async function get_chats(){
                 active_chat_class = ' active_chat';
                 g_selected_active_chat_type = chat_type;
             }
-            div_section.innerHTML += '<div class="chat_list' + active_chat_class + '"><div class="chat_people"><div class="chat_img"><img src="img/default_profile_icon.png" alt="profile"></div><div class="chat_ib"><div onclick="get_chat_messages(\'' + chat_name + '\', \'' + shown_chat_name  + '\');">' + shown_chat_name + '</div></div></div></div>';
+
+            var is_connected = await get_is_connected(shown_chat_name);
+            if (is_connected)
+            {
+                div_section.innerHTML += '<div class="chat_list' + active_chat_class + '"><div class="chat_people"><div class="chat_img"><img src="img/default_profile_icon.png" alt="profile"></div><div class="chat_ib"><div onclick="get_chat_messages(\'' + chat_name + '\', \'' + shown_chat_name  + '\');">' + shown_chat_name + '<div id="circle_if_connected"</div></div></div></div></div>';
+            }
+            else
+            {
+                div_section.innerHTML += '<div class="chat_list' + active_chat_class + '"><div class="chat_people"><div class="chat_img"><img src="img/default_profile_icon.png" alt="profile"></div><div class="chat_ib"><div onclick="get_chat_messages(\'' + chat_name + '\', \'' + shown_chat_name  + '\');">' + shown_chat_name + '</div></div></div></div>';
+            }
         }
         if (active_chat_class != ''){
             g_selected_active_chat_real = chat_name;
@@ -164,6 +173,9 @@ async function create_chat(){
             create_group_chat(g_input_create_chat_name, group_name);
         }
     }
+    document.getElementById("group_name").value = "";
+        document.getElementById("create-chats").value = "";
+
 }
 
 async function create_private_chat(recipient){
@@ -184,7 +196,7 @@ function check_create_group(){
 
     var group_name_div = document.getElementById("create_chat_group_name");
     if (g_input_create_chat_name.indexOf(",") != -1){
-        group_name_div.innerHTML = '<input type="text" placeholder="Enter group_name"/>';
+        group_name_div.innerHTML = '<input type="text" id="group_name" placeholder="Enter group_name"/>';
     }
     else{
         group_name_div.innerHTML = "";

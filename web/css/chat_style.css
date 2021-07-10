@@ -200,4 +200,13 @@ img{ max-width:100%;}
     font-weight:900;
 }
 
+#circle_if_connected{
+    width: 20px;
+    height: 20px;
+    background: green;
+    border-radius: 50%;
+    float: right;
+}
+
+
 
