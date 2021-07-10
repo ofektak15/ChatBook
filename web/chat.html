@@ -1,10 +1,12 @@
 <html>
 <head>
     <title>ChatBook</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet"
+          id="bootstrap-css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css"
+          rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/chat_style.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script type="text/javascript" src="../eel.js"></script>
@@ -25,6 +27,8 @@
         else{
         }
     }, 3000)
+
+
 </script>
 
 <!--get_chat_messages-->
@@ -38,24 +42,27 @@
 
                     <div class="recent_heading">
                         <h4>Recent Chats</h4>
-                        <div id="current_time"></div>
-                        <script>startTime()</script>
-                    </div>
+                        <div class="srch_bar">
+                            <div class="stylish-input-group">
+                                <button type="button" id="log-out" onclick="log_out()"><i class="fa fa-sign-out"></i>
+                                </button>
 
-                    <div class="srch_bar">
-                        <div class="stylish-input-group">
-                            <button type="button" id="log-out" onclick="log_out()"> <i class="fa fa-sign-out"></i></button>
+                                <input id="create-chats" type="text" onkeyup="check_create_group(this.value);"
+                                       placeholder="Enter username/s">
 
-                            <input id="create-chats" type="text" onkeyup="check_create_group(this.value);"
-                                   placeholder="Enter username/s">
-
-                            <span class="input-group-addon">
-                            <button id="plus_icon" type="button" onclick="create_chat()"> <i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+                                <span class="input-group-addon">
+                            <button id="plus_icon" type="button" onclick="create_chat()"> <i class="fa fa-plus-circle"
+                                                                                             aria-hidden="true"></i></button>
                             <div id="create_chat_group_name"></div>
                             <div id="error_usernames" style="color: red"></div>
                             <div id="error_group_name" style="color: red"></div>
                 </span></div>
+                        </div>
+
+                        <div id="current_time"></div>
+                        <script>startTime()</script>
                     </div>
+
                 </div>
 
                 <div class="inbox_chat" id="inbox_chat">
@@ -78,15 +85,15 @@
                 <div class="msg_history" id="msg_history">
                     <div class="incoming_msg">
                         <div class="incoming_msg_img">
-                        <div class="received_msg">
-                            <div class="received_withd_msg">
+                            <div class="received_msg">
+                                <div class="received_withd_msg">
+                                    <span class="time_date"></span></div>
+                            </div>
+                        </div>
+                        <div class="outgoing_msg">
+                            <div class="sent_msg">
                                 <span class="time_date"></span></div>
                         </div>
-                    </div>
-                    <div class="outgoing_msg">
-                        <div class="sent_msg">
-                            <span class="time_date"></span></div>
-                    </div>
                     </div>
                 </div>
                 <div class="type_msg">
