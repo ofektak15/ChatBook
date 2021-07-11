@@ -36,7 +36,10 @@ class SendMessageRequest(Message):
         self.message_content = obj['message_content']
 
     def handle(self, authenticated_sockets):
-        print("trying to handle sending message")
+        if self.message_content == "":
+            self.sender_socket.send(b'FAIL')
+            return
+
         str_db = open('db.json', 'r').read()
         json_db = json.loads(str_db)
 

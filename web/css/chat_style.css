@@ -200,13 +200,24 @@ img{ max-width:100%;}
     font-weight:900;
 }
 
-#circle_if_connected{
+#disconnected_icon{
+    width: 20px;
+    height: 20px;
+    background: red;
+    border-radius: 50%;
+    float: right;
+}
+
+#connected_icon{
     width: 20px;
     height: 20px;
     background: green;
     border-radius: 50%;
     float: right;
 }
+
+
+
 
 
 
