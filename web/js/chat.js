@@ -78,6 +78,9 @@ async function get_chats(){
 // The function gets the real chat name and the shown chat name
 // The function shows on the screen all the messages in the chosen conversation
 async function get_chat_messages(chat_name, shown_chat_name){
+    // deleting the error if the content of the message is empty
+    document.getElementById("error_content_message").innerHTML = "";
+
     g_selected_active_chat_real = chat_name; // the real selected chat name is the chat name
 
     // if the real chat name contains ',' - it's a private chat
@@ -190,6 +193,8 @@ var g_input_create_chat_name = '';
 // The function doesn't get parameters
 // The function sends a message
 async function send_message(){
+    document.getElementById("error_content_message").innerHTML = "";
+
     // the field where the user writes his message
     var element_input_write_msg = document.getElementById("input_write_msg");
 
@@ -198,7 +203,11 @@ async function send_message(){
     var username = await eel.get_username()();
     var chat_type = g_selected_active_chat_type; // the type of the chat
     var status = await eel.send_message(username, g_selected_active_chat_real, message_content, chat_type)();
-    element_input_write_msg.value = ''; // deleting the written message which has been sent to the chat
+    if (status == false){
+        document.getElementById("error_content_message").innerHTML = "You cannot send an empty message!";
+    }
+
+    element_input_write_msg.value = ''; // deleting the content of the message that has been sent to the chat
 }
 
 

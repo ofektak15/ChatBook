@@ -8,7 +8,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css"
           rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/chat_style.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script type="text/javascript" src="../eel.js"></script>
     <script src="js/chat.js"></script>
     <script src="js/current_time.js"></script>
@@ -42,22 +41,32 @@
                         <h4>Recent Chats</h4>
                         <div class="srch_bar">
                             <div class="stylish-input-group">
-                                <button type="button" id="log-out" onclick="log_out()"><i class="fa fa-sign-out"></i>
+                                <!-- Log out button !-->
+                                <button
+                                        type="button" id="log-out" onclick="log_out()"><i class="fa fa-sign-out"></i>
                                 </button>
 
-                                <input id="create-chats" type="text" onkeyup="check_create_group(this.value);"
-                                       placeholder="Enter username/s">
+                                <!-- Input of enter username/s !-->
+                                <input id="create-chats" type="text" onkeyup="check_create_group(this.value);" placeholder="Enter username/s">
 
                                 <span class="input-group-addon">
-                            <button id="plus_icon" type="button" onclick="create_chat()"> <i class="fa fa-plus-circle"
-                                                                                             aria-hidden="true"></i></button>
+
+                            <!-- Create new chat button !-->
+                            <button
+                                    id="plus_icon" type="button" onclick="create_chat()"> <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                            </button>
+                            <!-- A field of an input if the user wants to create a group and not a private chat !-->
                             <div id="create_chat_group_name"></div>
+
+                            <!-- Errors if the user didn't fill out one of the fields !-->
                             <div id="error_usernames" style="color: red; margin-right: 30px;"></div>
                             <div id="error_group_name" style="color: red; margin-right: 25px;"></div>
                 </span></div>
                         </div>
-
+                        <!-- Clock of the current time !-->
                         <div id="current_time"></div>
+
+                        <!-- A script that runs the function of the clock !-->
                         <script>startTime()</script>
                     </div>
 
@@ -65,10 +74,7 @@
 
                 <div class="inbox_chat" id="inbox_chat">
                     <div class="chat_list active_chat">
-                        <div class="chat_people">
-                            <div class="chat_img"><img src="img/default_profile_icon.png"
-                                                       alt="profile"></div>
-                        </div>
+                        <div class="chat_people"></div>
                     </div>
                 </div>
             </div>
@@ -97,10 +103,17 @@
                 </div>
                 <div class="type_msg">
                     <div class="input_msg_write">
+                        <!-- An input where the user writes the content of his message !-->
                         <input type="text" class="write_msg" id="input_write_msg" placeholder="Type a message"/>
+
+                        <!-- if the content of the message is empty - an error message will be shown !-->
+                        <div id="error_content_message" style="color: red;"></div>
+
+                        <!-- An icon, when the user clicks it - the function send_message() will be called !-->
                         <button class="msg_send_btn" type="button" onclick="send_message();"><i
                                 class="fa fa-paper-plane-o"
-                                aria-hidden="true"></i></button>
+                                aria-hidden="true"></i>
+                        </button>
                     </div>
                 </div>
             </div>

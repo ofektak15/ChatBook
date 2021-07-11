@@ -63,16 +63,6 @@ class Client(object):
             return True
         return False
 
-    def handle_recv(self):
-        data = self.sock.recv(1024 * 1024).decode()
-
-        if data:  # if len(data) != 0
-            message = SendMessageRequest()
-            message.unpack(data)
-            msg = 'Got message "' + message.message_content + '" From "' + message.sender_username + '"'
-            print(msg)
-            return msg
-
     def get_chats(self):
         request = GetChatsRequest()
         print(request.pack())

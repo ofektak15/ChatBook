@@ -4,10 +4,19 @@ class Message(object):
         self.sender_socket = None
 
     def pack(self):
+        """
+        Virtual function
+        """
         raise NotImplementedError
 
     def unpack(self, data):
+        """
+        Virtual function
+        """
         raise NotImplementedError
 
     def handle(self, authenticated_sockets):
+        """
+        Virtual function
+        """
         raise NotImplementedError
