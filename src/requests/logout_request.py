@@ -44,7 +44,7 @@ class LogoutRequest(Message):
         if self.sender_socket not in authenticated_sockets.keys():
             self.sender_socket.send(b'FAIL')
 
-        for user in json_db['user']:
+        for user in json_db['users']:
             json_db['users'][user]['is_update'] = True
 
         # changing from connected to disconnected

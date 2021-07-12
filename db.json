@@ -20,16 +20,6 @@
       "is_connected": false,
       "is_update": false
     },
-    "hello1234": {
-      "password": "fa80a258216ef839e4bc5a849da52fb0",
-      "is_connected": false,
-      "is_update": false
-    },
-    "abcdf123": {
-      "password": "c8acd27cc42b380585b96452ecfa3fe7",
-      "is_connected": false,
-      "is_update": false
-    },
     "dani35": {
       "password": "d9cc281e5a5d6eda25c4b1346ea5ecc9",
       "is_connected": false,
@@ -44,6 +34,11 @@
         "tomer",
         "adam"
       ],
+      "unread_messages": {
+        "ofek": 0,
+        "tomer": 0,
+        "adam": 0
+      },
       "chat_messages": [
         {
           "from": "ofek",
@@ -104,12 +99,21 @@
           "message_content": "fr",
           "from": "tomer",
           "time": "17:25"
+        },
+        {
+          "message_content": "s",
+          "from": "tomer",
+          "time": "21:37"
         }
       ],
       "chat_participants": [
         "ofek",
         "tomer"
-      ]
+      ],
+      "unread_messages": {
+        "ofek": 0,
+        "tomer": 0
+      }
     },
     "amazing_group": {
       "chat_type": "group",
@@ -118,6 +122,11 @@
         "tomer",
         "ohad"
       ],
+      "unread_messages": {
+        "ofek": 0,
+        "tomer": 0,
+        "ohad": 0
+      },
       "chat_messages": [
         {
           "message_content": "hi from me 2",
@@ -172,6 +181,10 @@
         "ofek",
         "dani35"
       ],
+      "unread_messages": {
+        "ofek": 0,
+        "dani35": 0
+      },
       "chat_messages": [
         {
           "message_content": "",
@@ -192,69 +205,16 @@
         "ohad",
         "ofek"
       ],
+      "unread_messages": {
+        "dani35": 0,
+        "ohad": 0,
+        "ofek": 0
+      },
       "chat_messages": [
         {
           "message_content": "aa",
           "from": "ofek",
           "time": "1:36"
-        }
-      ]
-    },
-    "abcdf123,ofek": {
-      "chat_type": "private",
-      "chat_messages": [
-        {
-          "message_content": "d",
-          "from": "ofek",
-          "time": "19:29"
-        }
-      ],
-      "chat_participants": [
-        "abcdf123",
-        "ofek"
-      ]
-    },
-    "good group": {
-      "chat_type": "group",
-      "chat_participants": [
-        "tomer",
-        "ohad",
-        "ofek"
-      ],
-      "chat_messages": [
-        {
-          "message_content": "ds",
-          "from": "ofek",
-          "time": "19:47"
-        },
-        {
-          "message_content": "rtrf",
-          "from": "ofek",
-          "time": "19:47"
-        }
-      ]
-    },
-    "nice": {
-      "chat_type": "group",
-      "chat_participants": [
-        "tomer",
-        "dani35",
-        "ofek"
-      ],
-      "chat_messages": []
-    },
-    "asd": {
-      "chat_type": "group",
-      "chat_participants": [
-        "tomer",
-        "dani35",
-        "ofek"
-      ],
-      "chat_messages": [
-        {
-          "message_content": "ds",
-          "from": "tomer",
-          "time": "16:20"
         }
       ]
     }

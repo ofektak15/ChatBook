@@ -52,6 +52,9 @@ class LoginRequest(Message):
                 # changing from disconnected to connected
                 json_db['users'][self.username]['is_connected'] = True
 
+                for user in json_db['users']:
+                    json_db['users'][user]['is_update'] = True
+
                 str_modified_db = json.dumps(json_db)
                 open('db.json', 'w').write(str_modified_db)
                 self.sender_socket.send(b'SUCCESS')
