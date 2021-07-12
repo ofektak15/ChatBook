@@ -71,15 +71,8 @@ class SendMessageRequest(Message):
 
         # if the type of the message is PRIVATE
         if self.type_of_message == 'private':
-            # A list of 2 people (one of them is the sender username and the other is the username of the recipient)
-            recipients = self.recipients.split(',')
-
-            # removing the username of the sender so the username of the recipient stays in the list
-            recipients.remove(self.sender_username)
-            recipient_username = recipients[0]
-
-            # if the recipient doesn't exist in the DB but he's authenticated
-            if recipient_username not in json_db['chats']:
+            # if the chat doesn't exist in the DB
+            if self.recipients not in json_db['chats']:
                 # Create a new chat in the DB
                 json_db['chats'][self.recipients] = {}
                 json_db['chats'][self.recipients]['chat_type'] = 'private'

@@ -32,7 +32,10 @@ class GetIsUpdate(Message):
         The function handles the request
         :param authenticated_sockets: A dictionary of all the users the logged in once.
         key: socket, value: username
-        :return: The function handles getting if a username is connected or not.
+        :return: If the user have one of these:   --> the function changes in DB that the user needs update (the field 'is_update')
+        1. got a new message
+        2. someone from his friends connected/disconnected
+        3. someone added him to a new chat (private/group)
         """
 
         str_db = open('db.json', 'r').read()

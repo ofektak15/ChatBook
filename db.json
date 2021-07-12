@@ -74,6 +74,36 @@
           "message_content": "s",
           "from": "ofek",
           "time": "19:49"
+        },
+        {
+          "message_content": "dfd",
+          "from": "ofek",
+          "time": "16:14"
+        },
+        {
+          "message_content": "sa",
+          "from": "ofek",
+          "time": "16:14"
+        },
+        {
+          "message_content": "heyyyy",
+          "from": "tomer",
+          "time": "16:16"
+        },
+        {
+          "message_content": "a",
+          "from": "tomer",
+          "time": "16:17"
+        },
+        {
+          "message_content": "s",
+          "from": "tomer",
+          "time": "17:22"
+        },
+        {
+          "message_content": "fr",
+          "from": "tomer",
+          "time": "17:25"
         }
       ],
       "chat_participants": [
@@ -212,6 +242,21 @@
         "ofek"
       ],
       "chat_messages": []
+    },
+    "asd": {
+      "chat_type": "group",
+      "chat_participants": [
+        "tomer",
+        "dani35",
+        "ofek"
+      ],
+      "chat_messages": [
+        {
+          "message_content": "ds",
+          "from": "tomer",
+          "time": "16:20"
+        }
+      ]
     }
   }
 }

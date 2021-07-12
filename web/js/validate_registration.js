@@ -1,5 +1,4 @@
-﻿// https://github.com/ChrisKnott/Eel/issues/426
-eel.expose(go_to)
+﻿eel.expose(go_to)
 function go_to(url){
     window.location.replace(url);
 };
@@ -45,21 +44,20 @@ function validate_registration_form() {
 
     mode = checkDateBirth(date) && mode;
 
-    // TODO: different errors for failed registration and failed checks
-    // should be mode == true
-    if (true){
-        alert("Attempting to register...");
+    if (mode == true){
         status_registration = eel.register(userName, password);
-        if (!status_registration){
-            alert("Username already exists...");
+        if (status_registration == false){
+            document.getElementById("error_username_exists").innerHTML = "Username already exists";
+            return false;
         }
-        return status_registration;
+        else{
+            go_to('login.html');
+            return true;
+        }
     }
     else{
-        alert("Please fix the form :)");
-        // TODO: Should redirect to login if registration succeeded
+        return false;
     }
-    return mode;
 }
 
 
