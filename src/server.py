@@ -66,6 +66,9 @@ def main():
 
         for message in messages:
             type(message)
+            if type(message) == "GetNumberOfNewMessages":
+                print("username: " + message.username)
+                print("chat_name: " + message.chat_name)
             message.handle(authenticated_sockets)
 
 

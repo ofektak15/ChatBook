@@ -2,28 +2,28 @@
   "users": {
     "ofek": {
       "password": "81dc9bdb52d04dc20036dbd8313ed055",
-      "is_connected": true,
-      "is_update": true
+      "is_connected": false,
+      "is_update": false
     },
     "tomer": {
       "password": "81dc9bdb52d04dc20036dbd8313ed055",
       "is_connected": false,
-      "is_update": true
+      "is_update": false
     },
     "ohad": {
       "password": "81dc9bdb52d04dc20036dbd8313ed055",
       "is_connected": false,
-      "is_update": true
+      "is_update": false
     },
     "adam": {
       "password": "81dc9bdb52d04dc20036dbd8313ed055",
       "is_connected": false,
-      "is_update": true
+      "is_update": false
     },
     "dani35": {
-      "password": "d9cc281e5a5d6eda25c4b1346ea5ecc9",
+      "password": "81dc9bdb52d04dc20036dbd8313ed055",
       "is_connected": false,
-      "is_update": true
+      "is_update": false
     }
   },
   "chats": {
@@ -205,6 +205,26 @@
           "message_content": "sds",
           "from": "ofek",
           "time": "16:14"
+        },
+        {
+          "message_content": "dsd",
+          "from": "ofek",
+          "time": "23:51"
+        },
+        {
+          "message_content": "hi dani, second message!",
+          "from": "ofek",
+          "time": "23:51"
+        },
+        {
+          "message_content": "hi",
+          "from": "ofek",
+          "time": "0:6"
+        },
+        {
+          "message_content": "dd",
+          "from": "ofek",
+          "time": "0:7"
         }
       ]
     },
