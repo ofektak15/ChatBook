@@ -81,6 +81,11 @@ def get_is_update():
     return client.get_is_update()
 
 
+@eel.expose
+def get_number_of_new_messages(username, chat_name):
+    return client.get_number_of_new_messages(username, chat_name)
+
+
 def main():
     eel.init('web')
     rnd = random.randint(0, 3000)

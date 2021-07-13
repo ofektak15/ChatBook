@@ -64,6 +64,13 @@ class SendMessageRequest(Message):
         str_db = open('db.json', 'r').read()
         json_db = json.loads(str_db)
 
+        # NEW CODE
+        participants = self.recipients.split(",")
+        participants.remove(self.sender_username)
+        for participant in participants:
+            json_db['chats'][self.group_name]['unread_messages'][participant] += 1
+        # NEW CODE
+
         current_time_dict = get_current_time()  # a dictionary of the current time
         current_hour = current_time_dict['hour']  # the current hour
         current_minutes = current_time_dict['minutes']  # the current minutes

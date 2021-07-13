@@ -6,6 +6,7 @@ from src.requests.get_chat_messages_request import GetChatMessagesRequest
 from src.requests.get_chats_request import GetChatsRequest
 from src.requests.get_is_connected import GetIsConnected
 from src.requests.get_is_update import GetIsUpdate
+from src.requests.get_number_of_new_messages_request import GetNumberOfNewMessages
 from src.requests.get_username_request import GetUsernameRequest
 from src.requests.login_request import LoginRequest
 from src.requests.register_request import RegisterRequest
@@ -138,3 +139,11 @@ class Client(object):
         status = dict_is_update['is_update']
         print(status)
         return status
+
+    def get_number_of_new_messages(self, username, chat_name):
+        request = GetNumberOfNewMessages()
+        request.username = username
+        request.chat_name = chat_name
+        self.sock.send(request.pack().encode())
+        number_of_new_messages = self.sock.recv(1024).decode()
+        return number_of_new_messages

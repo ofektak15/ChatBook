@@ -57,6 +57,9 @@ class GetChatMessagesRequest(Message):
             self.sender_socket.send(b'FAIL')
             return
 
+        # when the user enters to a chat - he doesn't have new messages there
+        json_db['chats'][self.chat_name]['unread_messages'][username] = 0
+
         list_messages = json_db['chats'][self.chat_name]['chat_messages']  # list of messages
         dict_messages = {'username': username, 'list_messages': list_messages}  # dictionary of the messages
         bytes_dict_messages = json.dumps(dict_messages).encode()

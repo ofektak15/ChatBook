@@ -2,28 +2,28 @@
   "users": {
     "ofek": {
       "password": "81dc9bdb52d04dc20036dbd8313ed055",
-      "is_connected": false,
-      "is_update": false
+      "is_connected": true,
+      "is_update": true
     },
     "tomer": {
       "password": "81dc9bdb52d04dc20036dbd8313ed055",
       "is_connected": false,
-      "is_update": false
+      "is_update": true
     },
     "ohad": {
       "password": "81dc9bdb52d04dc20036dbd8313ed055",
       "is_connected": false,
-      "is_update": false
+      "is_update": true
     },
     "adam": {
       "password": "81dc9bdb52d04dc20036dbd8313ed055",
       "is_connected": false,
-      "is_update": false
+      "is_update": true
     },
     "dani35": {
       "password": "d9cc281e5a5d6eda25c4b1346ea5ecc9",
       "is_connected": false,
-      "is_update": false
+      "is_update": true
     }
   },
   "chats": {
@@ -104,6 +104,11 @@
           "message_content": "s",
           "from": "tomer",
           "time": "21:37"
+        },
+        {
+          "message_content": "hi ofek!",
+          "from": "tomer",
+          "time": "16:23"
         }
       ],
       "chat_participants": [
@@ -195,6 +200,11 @@
           "message_content": "",
           "from": "ofek",
           "time": "15:43"
+        },
+        {
+          "message_content": "sds",
+          "from": "ofek",
+          "time": "16:14"
         }
       ]
     },
