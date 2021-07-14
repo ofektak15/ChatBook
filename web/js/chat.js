@@ -57,19 +57,19 @@ async function get_chats(){
                 g_selected_active_chat_type = chat_type;
             }
 
+            var num_unread_messages = await eel.get_number_of_new_messages(sender_username, chat_name)();
+
             var is_connected = await get_is_connected(shown_chat_name); // is the user connected
             if (is_connected) // if the user is connected - show the name of the user and a connected icon
             {
-                div_section.innerHTML += '<div class="chat_list' + active_chat_class + '"><div class="chat_people"><div class="chat_img"><img src="img/default_profile_icon.png" alt="profile"></div><div class="chat_ib"><div onclick="get_chat_messages(\'' + chat_name + '\', \'' + shown_chat_name  + '\');"><b>' + shown_chat_name + '</b><div id="new_messages_' + chat_name + '"</div><div id="connected_icon"</div></div></div></div></div>';
+                div_section.innerHTML += '<div class="chat_list' + active_chat_class + '"><div class="chat_people"><div class="chat_img"><img src="img/default_profile_icon.png" alt="profile"></div><div class="chat_ib"><div onclick="get_chat_messages(\'' + chat_name + '\', \'' + shown_chat_name  + '\');"><b>' + shown_chat_name + " num: " + num_unread_messages +  '</b><div id="connected_icon"</div></div></div></div></div>';
             }
             else // if the user is disconnected - show the name of the user and a disconnected icon
             {
-                div_section.innerHTML += '<div class="chat_list' + active_chat_class + '"><div class="chat_people"><div class="chat_img"><img src="img/default_profile_icon.png" alt="profile"></div><div class="chat_ib"><div onclick="get_chat_messages(\'' + chat_name + '\', \'' + shown_chat_name  + '\');"><b>' + shown_chat_name + '</b><div id="new_messages_' + chat_name + '"</div><div id="disconnected_icon"</div></div></div></div></div>';
+                div_section.innerHTML += '<div class="chat_list' + active_chat_class + '"><div class="chat_people"><div class="chat_img"><img src="img/default_profile_icon.png" alt="profile"></div><div class="chat_ib"><div onclick="get_chat_messages(\'' + chat_name + '\', \'' + shown_chat_name  + '\');"><b>' + shown_chat_name + " num: " + num_unread_messages + '</b><div id="disconnected_icon"</div></div></div></div></div></div>';
             }
         } // PRIVATE CHAT
 
-        var new_messages_num = await eel.get_number_of_new_messages(sender_username, chat_name)();
-        document.getElementById("new_messages_" + chat_name).innerHTML = "num:" + new_messages_num;
 
         if (active_chat_class != ''){
             g_selected_active_chat_real = chat_name;
@@ -110,7 +110,6 @@ async function get_chat_messages(chat_name, shown_chat_name){
             document.getElementById("is_connected").innerText = "disconnected";
         }
     }
-
     // showing on the screen the name of the chat
     document.getElementById("name_of_chat").innerHTML = shown_chat_name;
     var div_section = document.getElementById("msg_history");
