@@ -63,4 +63,9 @@ class GetChatMessagesRequest(Message):
         list_messages = json_db['chats'][self.chat_name]['chat_messages']  # list of messages
         dict_messages = {'username': username, 'list_messages': list_messages}  # dictionary of the messages
         bytes_dict_messages = json.dumps(dict_messages).encode()
+
+        # updating the DB
+        str_modified_db = json.dumps(json_db)
+        open('db.json', 'w').write(str_modified_db)
+
         self.sender_socket.send(bytes_dict_messages)  # sending a dictionary of messages
