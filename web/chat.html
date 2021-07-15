@@ -21,7 +21,9 @@
         var status_is_update = await get_is_update();
         if (status_is_update){
             get_chats();
-            get_chat_messages(g_selected_active_chat_real, g_selected_active_chat_shown);
+            if (g_selected_active_chat_real != "" && g_selected_active_chat_shown != ""){
+                get_chat_messages(g_selected_active_chat_real, g_selected_active_chat_shown);
+            }
         }
     }, 500)
 </script>
