@@ -60,6 +60,9 @@ class CreateGroupChat(Message):
         json_db['chats'][chat_name]['chat_type'] = "group"
         json_db['chats'][chat_name]['chat_participants'] = recipients + [username]
         json_db['chats'][chat_name]['chat_messages'] = []
+        json_db['chats'][chat_name]['unread_messages'] = {}
+        for participant in json_db['chats'][chat_name]['chat_participants']:
+            json_db['chats'][chat_name]['unread_messages'][participant] = 0
 
         # all the recipients in the chat now have a new chat
         for recipient in json_db['chats'][chat_name]['chat_participants']:
