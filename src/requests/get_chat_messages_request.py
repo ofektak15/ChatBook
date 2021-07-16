@@ -45,7 +45,7 @@ class GetChatMessagesRequest(Message):
             self.sender_socket.send(b'FAIL')
             return
 
-        username = authenticated_sockets[self.sender_socket]
+        sender_username = authenticated_sockets[self.sender_socket]
 
         # If the name of the chat doesn't exist in the DB - return FAIL
         if self.chat_name not in json_db['chats']:
@@ -53,15 +53,30 @@ class GetChatMessagesRequest(Message):
             return
 
         # If the username is not one of the participants in the chat - return FAIL
-        if username not in json_db['chats'][self.chat_name]['chat_participants']:
+        if sender_username not in json_db['chats'][self.chat_name]['chat_participants']:
             self.sender_socket.send(b'FAIL')
             return
 
-        # when the user enters to a chat - he doesn't have new messages there
-        json_db['chats'][self.chat_name]['unread_messages'][username] = 0
+        # PRIVATE CHAT
+        if ',' in self.chat_name:
+            participants_string = self.chat_name
+            participants_list = participants_string.split(',')
+            participants_list.remove(sender_username)  # now only the recipient is in the list
+
+            # when the user enters to a chat - he doesn't have new messages there
+            json_db['chats'][self.chat_name]['unread_messages'][participants_list[0]] = 0
+
+        # GROUP CHAT
+        else:
+            participants_list = json_db['chats'][self.chat_name]['chat_participants']
+            participants_list.remove(sender_username)  # now only the recipients are in the list
+
+            for participant in participants_list:
+                # when the user enters to a chat - he doesn't have new messages there
+                json_db['chats'][self.chat_name]['unread_messages'][participant] = 0
 
         list_messages = json_db['chats'][self.chat_name]['chat_messages']  # list of messages
-        dict_messages = {'username': username, 'list_messages': list_messages}  # dictionary of the messages
+        dict_messages = {'username': sender_username, 'list_messages': list_messages}  # dictionary of the messages
         bytes_dict_messages = json.dumps(dict_messages).encode()
 
         # updating the DB

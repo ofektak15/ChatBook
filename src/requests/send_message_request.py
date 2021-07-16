@@ -73,9 +73,9 @@ class SendMessageRequest(Message):
         if self.type_of_message == 'private':
             participants = self.recipients.split(",")
             participants.remove(self.sender_username)
-            for participant in participants:
-                json_db['chats'][self.group_name]['unread_messages'][participant] += 1
+            json_db['chats'][self.group_name]['unread_messages'][participants[0]] += 1
 
+            #-----------------------------------------------#
             # if the chat doesn't exist in the DB
             if self.recipients not in json_db['chats']:
                 # Create a new chat in the DB
@@ -83,6 +83,7 @@ class SendMessageRequest(Message):
                 json_db['chats'][self.recipients]['chat_type'] = 'private'
                 json_db['chats'][self.recipients]['chat_messages'] = []
                 json_db['chats'][self.recipients]['chat_participants'] = self.recipients.split(',')
+            #-----------------------------------------------#
 
             # all the recipients in the chat now have a new chat
             for recipient in json_db['chats'][self.recipients]['chat_participants']:

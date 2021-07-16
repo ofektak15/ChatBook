@@ -79,16 +79,15 @@ class Client(object):
         print("get_chat_messages request: " + request.pack())
         self.sock.send(request.pack().encode())
         bytes_list_messages = self.sock.recv(1024 * 1024).decode()
-        print('get_chat_messages: ' + bytes_list_messages)
-        print("chat name: " + chat_name)
         dict_messages = json.loads(bytes_list_messages)
         return dict_messages
 
     def get_username(self):
         request = GetUsernameRequest()
-        print("request:" + request.pack())
         self.sock.send(request.pack().encode())
         username = self.sock.recv(1024 * 1024).decode()
+        request.username = username
+        print("request:" + request.pack())
         return username
 
     def log_out(self, username):
