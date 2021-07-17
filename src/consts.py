@@ -13,6 +13,7 @@ from src.requests.send_message_request import SendMessageRequest
 
 
 class Consts(object):
+    # A dictionary that contains all the types of the requests
     MESSAGES = {
         'GetChatMessagesRequest': GetChatMessagesRequest,
         'GetChatsRequest': GetChatsRequest,

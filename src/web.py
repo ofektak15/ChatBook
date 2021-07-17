@@ -1,15 +1,15 @@
 import random
-
 from src.client import Client
 import eel
 
-client = Client()
+client = Client()  # creating a client
 
 
 @eel.expose
 def register(username, password):
     print('register')
     status = client.register(username, password)
+    # if the user succeed in the registration - the screen changes to the page 'login'
     if status:
         eel.go_to('/login.html')
     return status
@@ -19,6 +19,7 @@ def register(username, password):
 def login(username, password):
     print('login - web')
     status = client.login(username, password)
+    # if the user succeed in the login - the screen changes to the page 'chat'
     if status:
         print('goto chat')
         eel.go_to('/chat.html')
@@ -58,9 +59,9 @@ def create_private_chat(recipient):
 
 
 @eel.expose
-def create_group_chat(recipient, group_name):
+def create_group_chat(recipients, group_name):
     print('create group chat')
-    return client.create_group_chat(recipient, group_name)
+    return client.create_group_chat(recipients, group_name)
 
 
 @eel.expose

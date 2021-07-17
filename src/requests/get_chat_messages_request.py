@@ -64,16 +64,16 @@ class GetChatMessagesRequest(Message):
             participants_list.remove(sender_username)  # now only the recipient is in the list
 
             # when the user enters to a chat - he doesn't have new messages there
-            json_db['chats'][self.chat_name]['unread_messages'][participants_list[0]] = 0
+            #json_db['chats'][self.chat_name]['unread_messages'][participants_list[0]] = 0
 
         # GROUP CHAT
         else:
             participants_list = json_db['chats'][self.chat_name]['chat_participants']
             participants_list.remove(sender_username)  # now only the recipients are in the list
 
-            for participant in participants_list:
+            #for participant in participants_list:
                 # when the user enters to a chat - he doesn't have new messages there
-                json_db['chats'][self.chat_name]['unread_messages'][participant] = 0
+             #   json_db['chats'][self.chat_name]['unread_messages'][participant] = 0
 
         list_messages = json_db['chats'][self.chat_name]['chat_messages']  # list of messages
         dict_messages = {'username': sender_username, 'list_messages': list_messages}  # dictionary of the messages
