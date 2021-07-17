@@ -12,15 +12,15 @@ function startTime() {
     setTimeout(startTime, 500);
 
     if (today.getHours() < 12) {
-        full_comment += "\n Good Morning!!";
+        full_comment += "\n Good Morning :)";
     }
 
     else if (today.getHours() < 17) {
-        full_comment += "\n Good Afternoon!!";
+        full_comment += "\n Good Afternoon :)";
     }
 
     else {
-        full_comment += "\n Good Evening!!";
+        full_comment += "\n Good Evening :)";
         document.getElementById('current_time');
     }
 

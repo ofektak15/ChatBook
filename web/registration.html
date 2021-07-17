@@ -7,14 +7,15 @@
     <script type="text/javascript" src="../eel.js"></script>
     <script src="js/go_back_button.js"></script>
     <script src="js/validate_registration.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-    <button type="button" onclick="goBack()">Go Back</button>
+    <i typeof="button" class="fa fa-arrow-left" style="font-size:48px;color:#60adde" onclick="goBack()"></i>
 
     <h1 style="color: white; font-size: 70px;">Sign up here</h1>
 
     <form name="registration_form" onsubmit="validate_registration_form()">
-
+        <img style="float: right; margin-right: 300px;" src="/img/image_registration.png">
 
         <input type="text" onkeyup="checkName(this.value);" id="firstName" name="firstName" placeholder="First Name... (Required)" />
         <label style="color: white; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 120%;">First name</label>

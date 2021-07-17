@@ -1,5 +1,5 @@
 ﻿body {
-    background-image: url('../img/registration_background.jpg');
+    background-color: black;
     background-size: cover;
     font-family: Arial;
 }
@@ -39,7 +39,7 @@ input[type=reset] {
     margin-top: 20px;
     outline: none;
     border: none;
-    background: red;
+    background: #FF6347;
     opacity: 1;
     font-size: 20px;
     color: #fff;
