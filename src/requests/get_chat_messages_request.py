@@ -69,6 +69,10 @@ class GetChatMessagesRequest(Message):
                 # when the user enters to a chat - he doesn't have new messages there
                 json_db['chats'][self.chat_name]['unread_messages'][participants_list[0]] = 0
 
+                # updating the DB
+                str_modified_db = json.dumps(json_db)
+                open('db.json', 'w').write(str_modified_db)
+
             # GROUP CHAT
             else:
                 participants_list = json_db['chats'][self.chat_name]['chat_participants']
@@ -78,12 +82,12 @@ class GetChatMessagesRequest(Message):
                     # when the user enters to a chat - he doesn't have new messages there
                     json_db['chats'][self.chat_name]['unread_messages'][participant] = 0
 
+                # updating the DB
+                str_modified_db = json.dumps(json_db)
+                open('db.json', 'w').write(str_modified_db)
+
         list_messages = json_db['chats'][self.chat_name]['chat_messages']  # list of messages
         dict_messages = {'username': sender_username, 'list_messages': list_messages}  # dictionary of the messages
         bytes_dict_messages = json.dumps(dict_messages).encode()
-
-        # updating the DB
-        str_modified_db = json.dumps(json_db)
-        open('db.json', 'w').write(str_modified_db)
 
         self.sender_socket.send(bytes_dict_messages)  # sending a dictionary of messages

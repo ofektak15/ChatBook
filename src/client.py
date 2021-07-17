@@ -107,19 +107,19 @@ class Client(object):
 
     def get_chat_messages(self, chat_name, reset_unread_msgs_count):
         """
-        :param reset_unread_msgs_count:
+        :param reset_unread_msgs_count: if the number of the unread messages should be reset - it would
+        be 'True'. if not - it would be 'False'.
         :param chat_name: the name of the chat
         :return: the function returns a dictionary that contains all the messages that are in the group/private chat.
         """
         request = GetChatMessagesRequest()
         request.chat_name = chat_name
         request.reset_unread_msgs_count = reset_unread_msgs_count
-
         print("get_chat_messages request: " + request.pack())
-        if reset_unread_msgs_count:
-            print("==========================RESET TRUE============================" + str(reset_unread_msgs_count))
-        else:
-            print("==========================RESET FALSE============================" + str(reset_unread_msgs_count))
+        if reset_unread_msgs_count == "True":
+            print("==========================RESET TRUE============================" + reset_unread_msgs_count)
+        elif reset_unread_msgs_count == "False":
+            print("==========================RESET FALSE============================" + reset_unread_msgs_count)
 
         self.sock.send(request.pack().encode())
 
