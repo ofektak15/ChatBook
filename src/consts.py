@@ -26,7 +26,7 @@ class Consts(object):
         'CreateGroupChat': CreateGroupChat,
         'GetIsConnected': GetIsConnected,
         'GetIsUpdate': GetIsUpdate,
-        'GetNumberOfNewMessages': GetNumberOfNewMessages
+        'GetNumberOfNewMessages': GetNumberOfNewMessages,
     }
 
     PORT = 8082

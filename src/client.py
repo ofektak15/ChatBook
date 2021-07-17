@@ -105,15 +105,21 @@ class Client(object):
         dict_chats = json.loads(bytes_dict_chats)
         return dict_chats
 
-    def get_chat_messages(self, chat_name):
+    def get_chat_messages(self, chat_name, reset_unread_msgs_count):
         """
+        :param reset_unread_msgs_count:
         :param chat_name: the name of the chat
         :return: the function returns a dictionary that contains all the messages that are in the group/private chat.
         """
         request = GetChatMessagesRequest()
         request.chat_name = chat_name
+        request.reset_unread_msgs_count = reset_unread_msgs_count
 
         print("get_chat_messages request: " + request.pack())
+        if reset_unread_msgs_count:
+            print("==========================RESET TRUE============================" + str(reset_unread_msgs_count))
+        else:
+            print("==========================RESET FALSE============================" + str(reset_unread_msgs_count))
 
         self.sock.send(request.pack().encode())
 
@@ -229,3 +235,5 @@ class Client(object):
         self.sock.send(request.pack().encode())
         number_of_new_messages = self.sock.recv(1024).decode()
         return number_of_new_messages
+
+

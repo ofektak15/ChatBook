@@ -21,8 +21,9 @@ async function get_chats(){
                 active_chat_class = ' active_chat'; // now the name of the class is - "chat_list active_chat"
                 g_selected_active_chat_type = chat_type;
             }
+            f = "False";
             // showing the names of the chats
-            div_section.innerHTML += '<div class="chat_list' + active_chat_class + '"><div class="chat_people"><div class="chat_img"><img src="img/default_profile_icon.png" alt="profile"></div><div class="chat_ib"><div onclick="get_chat_messages(\'' + chat_name + '\', \'' + chat_name  + '\');"><b>' + chat_name + '</b><br><div id="new_messages_' + chat_name + '"</div><div id="participants_' + chat_name + '"</div></div></div></div></div>';
+            div_section.innerHTML += '<div class="chat_list' + active_chat_class + '"><div class="chat_people"><div class="chat_img"><img src="img/default_profile_icon.png" alt="profile"></div><div class="chat_ib"><div onclick="get_chat_messages(\'' + chat_name + '\', \'' + chat_name+ '\', \'' + f + '\');"><b>' + chat_name + '</b><br><div id="new_messages_' + chat_name + '"</div><div id="participants_' + chat_name + '"</div></div></div></div></div>';
 
             // showing the usernames of the participants in the current group
             document.getElementById("participants_" + chat_name).innerHTML = "participants: ";
@@ -60,13 +61,15 @@ async function get_chats(){
             var num_unread_messages = await eel.get_number_of_new_messages(sender_username, chat_name)();
 
             var is_connected = await get_is_connected(shown_chat_name); // is the user connected
+            t = "True";
             if (is_connected) // if the user is connected - show the name of the user and a connected icon
             {
-                div_section.innerHTML += '<div class="chat_list' + active_chat_class + '"><div class="chat_people"><div class="chat_img"><img src="img/default_profile_icon.png" alt="profile"></div><div class="chat_ib"><div onclick="get_chat_messages(\'' + chat_name + '\', \'' + shown_chat_name  + '\');"><b>' + shown_chat_name + " num: " + num_unread_messages +  '</b><div id="connected_icon"</div></div></div></div></div>';
+                div_section.innerHTML += '<div class="chat_list' + active_chat_class + '"><div class="chat_people"><div class="chat_img"><img src="img/default_profile_icon.png" alt="profile"></div><div class="chat_ib"><div onclick="get_chat_messages(\'' + chat_name + '\', \'' + shown_chat_name + '\', \'' + t + '\');"><b>' + shown_chat_name + " num: " + num_unread_messages +  '</b><div id="connected_icon"</div></div></div></div></div>';
+
             }
             else // if the user is disconnected - show the name of the user and a disconnected icon
             {
-                div_section.innerHTML += '<div class="chat_list' + active_chat_class + '"><div class="chat_people"><div class="chat_img"><img src="img/default_profile_icon.png" alt="profile"></div><div class="chat_ib"><div onclick="get_chat_messages(\'' + chat_name + '\', \'' + shown_chat_name  + '\');"><b>' + shown_chat_name + " num: " + num_unread_messages + '</b><div id="disconnected_icon"</div></div></div></div></div></div>';
+                div_section.innerHTML += '<div class="chat_list' + active_chat_class + '"><div class="chat_people"><div class="chat_img"><img src="img/default_profile_icon.png" alt="profile"></div><div class="chat_ib"><div onclick="get_chat_messages(\'' + chat_name + '\', \'' + shown_chat_name+ '\', \'' + t + '\');"><b>' + shown_chat_name + " num: " + num_unread_messages + '</b><div id="disconnected_icon"</div></div></div></div></div></div>';
             }
         } // PRIVATE CHAT
 
@@ -81,7 +84,7 @@ async function get_chats(){
 
 // The function gets the real chat name and the shown chat name
 // The function shows on the screen all the messages in the chosen conversation
-async function get_chat_messages(chat_name, shown_chat_name){
+async function get_chat_messages(chat_name, shown_chat_name, reset_unread_msgs_count){
     // deleting the error if the content of the message is empty
     document.getElementById("error_content_message").innerHTML = "";
 
@@ -114,7 +117,14 @@ async function get_chat_messages(chat_name, shown_chat_name){
     document.getElementById("name_of_chat").innerHTML = shown_chat_name;
     var div_section = document.getElementById("msg_history");
     div_section.innerHTML = '';
-    var dict_messages = await eel.get_chat_messages(chat_name)(); // all the messages in the current chat in a dictionary
+    if (reset_unread_msgs_count == "True"){
+        var dict_messages = await eel.get_chat_messages(chat_name, "True")(); // all the messages in the current chat in a dictionary
+    }
+    else if (reset_unread_msgs_count == "False") {
+        var dict_messages = await eel.get_chat_messages(chat_name, "False")(); // all the messages in the current chat in a dictionary
+    }
+
+
     var list_chat_messages = dict_messages['list_messages']; // a list of all the messages
     var username = dict_messages['username']; // the user who is connected
     select_active_chat(shown_chat_name); // change the current chat from not active to active
@@ -154,6 +164,8 @@ async function get_chat_messages(chat_name, shown_chat_name){
         }
     }
 }
+
+
 
 // The function gets a shown chat name
 // The function changes the div's class of the parameter from not active to active

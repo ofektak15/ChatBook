@@ -40,10 +40,11 @@ def get_chats():
 
 
 @eel.expose
-def get_chat_messages(chat_name):
+def get_chat_messages(chat_name, reset_unread_msgs_count):
     print('get_chat_messages')
     print(chat_name)
-    return client.get_chat_messages(chat_name)
+
+    return client.get_chat_messages(chat_name, reset_unread_msgs_count)
 
 
 @eel.expose
