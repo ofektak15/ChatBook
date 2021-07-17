@@ -40,10 +40,10 @@ def get_chats():
 
 
 @eel.expose
-def get_chat_messages(chat_name, reset_unread_msgs_count):
+def get_chat_messages(chat_name):
     print('get_chat_messages')
     print(chat_name)
-    return client.get_chat_messages(chat_name, reset_unread_msgs_count)
+    return client.get_chat_messages(chat_name)
 
 
 @eel.expose
@@ -80,11 +80,6 @@ def get_is_connected(username):
 def get_is_update():
     print('get_is_update')
     return client.get_is_update()
-
-
-@eel.expose
-def get_number_of_new_messages(username, chat_name):
-    return client.get_number_of_new_messages(username, chat_name)
 
 
 def main():

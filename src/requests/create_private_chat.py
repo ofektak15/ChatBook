@@ -58,9 +58,6 @@ class CreatePrivateChat(Message):
         json_db['chats'][chat_name]['chat_type'] = "private"
         json_db['chats'][chat_name]['chat_participants'] = [username, self.recipient]
         json_db['chats'][chat_name]['chat_messages'] = []
-        json_db['chats'][chat_name]['unread_messages'] = {}
-        json_db['chats'][chat_name]['unread_messages'][self.recipient] = 0
-        json_db['chats'][chat_name]['unread_messages'][username] = 0
 
         # all the recipients in the chat now have a new chat
         for recipient in json_db['chats'][chat_name]['chat_participants']:

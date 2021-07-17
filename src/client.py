@@ -6,7 +6,6 @@ from src.requests.get_chat_messages_request import GetChatMessagesRequest
 from src.requests.get_chats_request import GetChatsRequest
 from src.requests.get_is_connected import GetIsConnected
 from src.requests.get_is_update import GetIsUpdate
-from src.requests.get_number_of_new_messages_request import GetNumberOfNewMessages
 from src.requests.get_username_request import GetUsernameRequest
 from src.requests.login_request import LoginRequest
 from src.requests.register_request import RegisterRequest
@@ -105,21 +104,13 @@ class Client(object):
         dict_chats = json.loads(bytes_dict_chats)
         return dict_chats
 
-    def get_chat_messages(self, chat_name, reset_unread_msgs_count):
+    def get_chat_messages(self, chat_name):
         """
-        :param reset_unread_msgs_count: if the number of the unread messages should be reset - it would
-        be 'True'. if not - it would be 'False'.
         :param chat_name: the name of the chat
         :return: the function returns a dictionary that contains all the messages that are in the group/private chat.
         """
         request = GetChatMessagesRequest()
         request.chat_name = chat_name
-        request.reset_unread_msgs_count = reset_unread_msgs_count
-        print("get_chat_messages request: " + request.pack())
-        if reset_unread_msgs_count == "True":
-            print("==========================RESET TRUE============================" + reset_unread_msgs_count)
-        elif reset_unread_msgs_count == "False":
-            print("==========================RESET FALSE============================" + reset_unread_msgs_count)
 
         self.sock.send(request.pack().encode())
 
@@ -221,19 +212,4 @@ class Client(object):
         status = dict_is_update['is_update']
         print(status)
         return status
-
-    def get_number_of_new_messages(self, username, chat_name):
-        """
-        :param username: the username of the client
-        :param chat_name: the name of the chat
-        :return: the function returns the number of the unread messages in a specific chat.
-        """
-        request = GetNumberOfNewMessages()
-        request.username = username
-        request.chat_name = chat_name
-
-        self.sock.send(request.pack().encode())
-        number_of_new_messages = self.sock.recv(1024).decode()
-        return number_of_new_messages
-
 
